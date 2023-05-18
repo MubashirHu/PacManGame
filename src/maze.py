@@ -4,10 +4,6 @@ class Maze:
         self._columns = 0
         self._cells = self._rows * self._columns
         self._level = []
-
-    def _set_maze_width(self, rows, columns):
-        self._rows = rows
-        self._columns = columns
         
     def _get_number_of_cells(self):
         return self._cells
