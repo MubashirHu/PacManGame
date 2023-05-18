@@ -3,6 +3,7 @@ from tkinter import *
 from src.ghost import *
 from src.pacman import *
 from src.maze import *
+from src.util import *
 class View:
 
     def __init__(self):
@@ -10,7 +11,7 @@ class View:
         #GUI window
         self._root = Tk()
         self._canvas = None 
-        self._square_size = 60
+        self._square_size = 50
 
         #objects
         self.PacmanMaze = Maze()
@@ -21,31 +22,23 @@ class View:
         self.GhostClyde = Ghost("orange")
 
         #data storage
-        
+
     def _draw_board(self):
         for i in range(self.PacmanMaze._rows):
             for j in range(self.PacmanMaze._columns):
-                if self._current_level[i][j] == "1":
+                if self._current_level[i][j] == "1": 
                     #print blue walls
-                    x0 = i * self._square_size
-                    y0 = j * self._square_size
-                    x1 = x0 + self._square_size
-                    y1 = y0 + self._square_size
-                    self._canvas.create_rectangle(x0, y0, x1, y1, fill='blue')
-                
+                    add_shape(view, i,j, self._square_size, 1, 'blue')
+    
                 elif self._current_level[i][j] == "0":
                     #print black walk area
-                    x0 = i * self._square_size
-                    y0 = j * self._square_size
-                    x1 = x0 + self._square_size
-                    y1 = y0 + self._square_size
-                    self._canvas.create_rectangle(x0, y0, x1, y1, fill='black')
+                    add_shape(view, i,j, self._square_size, 1, 'black')
 
                 else: print("ERROR in drawing board")
-                
-    def _move_pacman(self):
-        pass
 
+    def _move_pacman(self, obj, direction):
+        pass
+  
     def _move_ghost(self):
         pass
 
@@ -77,6 +70,10 @@ class View:
         self._set_level(1)
         self._canvas = Canvas(self._root, width=800, height=1000, bg='white')
         self._canvas.pack()
+
+        #add pacman
+
+        #add ghosts
 
 view = View()
 
