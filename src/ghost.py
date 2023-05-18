@@ -1,8 +1,8 @@
-class ghost:
-    def __init__(self, color, ):
+class Ghost:
+    def __init__(self, color):
         self._coordinate = (0,0)
         self._direction = ""
-        self._color = ""
+        self._color = color
         self._mode = 0
         self._speed = 0
         self._status = 0

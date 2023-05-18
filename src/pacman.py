@@ -1,4 +1,4 @@
-class pacMan:
+class PacMan:
     def __init__(self):
         self._position = (0,0)
         self._direction = ""
@@ -9,8 +9,7 @@ class pacMan:
         self._power_up_timer = 0
         self._power_up_duration = 0
         self._power_up_score = 0
-
-
+        
     #setters
     def _set_position(self, row, column):
         self._position = (row,column)
@@ -66,5 +65,3 @@ class pacMan:
     
     def _get_power_up_score(self):
         return self._power_up_score
-
-
