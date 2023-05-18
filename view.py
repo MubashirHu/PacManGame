@@ -10,6 +10,7 @@ class View:
         #GUI window
         self._root = Tk()
         self._canvas = None 
+        self._square_size = 60
 
         #objects
         self.PacmanMaze = Maze()
@@ -24,26 +25,24 @@ class View:
     def _draw_board(self):
         for i in range(self.PacmanMaze._rows):
             for j in range(self.PacmanMaze._columns):
-                if self._current_level[i][j] == 1:
+                if self._current_level[i][j] == "1":
                     #print blue walls
                     x0 = i * self._square_size
                     y0 = j * self._square_size
                     x1 = x0 + self._square_size
                     y1 = y0 + self._square_size
-                    self.GameWindow._canvas.create_rectangle(x0, y0, x1, y1, fill='green')
+                    self._canvas.create_rectangle(x0, y0, x1, y1, fill='blue')
                 
-                elif self._current_level[i][j] == 0:
+                elif self._current_level[i][j] == "0":
                     #print black walk area
                     x0 = i * self._square_size
                     y0 = j * self._square_size
                     x1 = x0 + self._square_size
                     y1 = y0 + self._square_size
-                    self.GameWindow._canvas.create_rectangle(x0, y0, x1, y1, fill='green')
+                    self._canvas.create_rectangle(x0, y0, x1, y1, fill='black')
 
                 else: print("ERROR in drawing board")
                 
-                print(self._current_level[i][j])
-
     def _move_pacman(self):
         pass
 
@@ -73,12 +72,14 @@ class View:
     def _initialize(self):
         #self._root.configure(bg = 'black')
         self._root.title('PacMan Game')
-        self._root.geometry('1000x1000')
+        self._root.geometry('800x1000')
 
-        self._canvas = Canvas(self._root, bg='white')
+        self._set_level(1)
+        self._canvas = Canvas(self._root, width=800, height=1000, bg='white')
         self._canvas.pack()
 
 view = View()
+
 view._initialize()
 view._draw_board()
 
