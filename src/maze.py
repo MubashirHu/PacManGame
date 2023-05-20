@@ -13,11 +13,11 @@ class Maze:
         self._columns = 0 
         
         if level == 1:
-            level_file_path = r'C:\Users\hussa\OneDrive\Documents\Workspace\Personal projects\PacmanGame\levels\lvl1'
+            level_file_path = r'C:\Users\hussa\OneDrive\Documents\Workspace\personal_projects\PacmanGame\levels\lvl1'
         elif level == 2:
-            level_file_path = r'C:\Users\hussa\OneDrive\Documents\Workspace\Personal projects\PacmanGame\levels\lvl2'
+            level_file_path = r'C:\Users\hussa\OneDrive\Documents\Workspace\personal_projects\PacmanGame\levels\lvl2'
         elif level == 3:
-            level_file_path = r'C:\Users\hussa\OneDrive\Documents\Workspace\Personal projects\PacmanGame\levels\lvl3'
+            level_file_path = r'C:\Users\hussa\OneDrive\Documents\Workspace\personal_projects\PacmanGame\levels\lvl3'
         else:
             return "NO PATH FOUND"
 
@@ -26,7 +26,7 @@ class Maze:
                 self._rows+=1
                 self._level.append(eachline)
                 #print(eachline)
-            
+                
             self._columns = len(self._level[0]) - 1
 
         return self._level

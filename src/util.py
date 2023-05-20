@@ -1,6 +1,6 @@
 
 def add_shape(obj, i,j, size, shape, color):
-    if shape == 0:
+    if shape == "circle":
         #circle
         x0 = i * size
         y0 = j * size
@@ -8,7 +8,7 @@ def add_shape(obj, i,j, size, shape, color):
         y1 = y0 + size
         obj._canvas.create_oval(x0, y0, x1, y1, fill=color)
         pass
-    elif shape == 1:
+    elif shape == "square":
         #rectangle
         x0 = i * size
         y0 = j * size

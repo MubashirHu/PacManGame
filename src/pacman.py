@@ -66,12 +66,12 @@ class PacMan:
     def _get_power_up_score(self):
         return self._power_up_score
     
-    def _get_starting_position_from_current_level(self, map_obj, current_level):
+    def _get_pacman_starting_position_from_current_level(self, map_obj, _current_level):
 
         x = int(map_obj._rows/2)
         y = int(map_obj._columns/2)
         
-        if current_level[x][y] == "1":
+        if _current_level[x][y] == "1":
             
             if([x + 1][y + 1] != "1"):
                 self._position = (x+1,y+1)
