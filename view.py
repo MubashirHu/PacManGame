@@ -14,7 +14,6 @@ class View:
         
 
     def _initialize(self):
-        #self._root.configure(bg = 'black')
         self._root.title('PacMan Game')
         self._root.geometry('800x1000')
 
