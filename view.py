@@ -11,8 +11,8 @@ class View:
         self._shape_size = 50
         self._wall_color = "blue"
         self._path_color = "black"
+        self._pacman_color = "yellow"
         
-
     def _initialize(self):
         self._root.title('PacMan Game')
         self._root.geometry('800x1000')
@@ -27,6 +27,13 @@ class View:
         elif(shape == 0):
             add_shape(self, x_coordinate, y_coordinate, self._shape_size, "square", self._path_color)
         elif(shape == 2):
-            add_shape(self, x_coordinate, y_coordinate, self._shape_size, "circle", 'yellow')
+            self._canvas.delete("pacman")
+            add_shape(self, x_coordinate, y_coordinate, self._shape_size, "circle", self._pacman_color)
         else:
-            print("ERROR")
+            print("ERROR: Unidentified shape")
+
+    def _update_pacman_position(self, x_coordinate, y_coordinate):
+        self._canvas.delete("pacman")
+        add_shape(self, x_coordinate, y_coordinate, self._shape_size, "circle", self._pacman_color)
+
+        

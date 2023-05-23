@@ -33,13 +33,13 @@ class Model:
             self._current_level = self.Map._get_level(3)
 
     def _move_pacman(self, direction):
-        if direction == 'up':
+        if direction == "w":
             self.Pacman._position[1] += 1
-        elif direction == 'down':
+        elif direction == "s":
             self.Pacman._position[1] -= 1
-        elif direction == 'right':
+        elif direction == "d":
             self.Pacman._position[0] += 1
-        elif direction == 'left':
+        elif direction == "a":
             self.Pacman._position[0] -= 1
         else:
             print("ERROR in _move_pacman")
@@ -49,6 +49,8 @@ class Model:
             return row, column, 1
         elif (self._current_level[row][column] == "0"):
             return row, column, 0
+             
+        
 
     def _move_ghost(self, obj):
         pass

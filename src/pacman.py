@@ -1,6 +1,7 @@
 class PacMan:
     def __init__(self):
         self._position = (0,0)
+        self._position = []
         self._direction = ""
         self._lives = 0
         self._current_score = 0
