@@ -1,6 +1,6 @@
 class PacMan:
     def __init__(self):
-        self._position = (0,0)
+        #self._position = (0,0)
         self._position = []
         self._direction = ""
         self._lives = 0
@@ -75,17 +75,22 @@ class PacMan:
         if _current_level[x][y] == "1":
             
             if([x + 1][y + 1] != "1"):
-                self._position = (x+1,y+1)
+                self._position.append(x+1)
+                self._position.append(y+1)
             elif ([x + 1][y - 1] != "1"):
-                self._position = (x+1,y-1)
+                self._position.append(x+1)
+                self._position.append(y-1)
             elif ([x - 1][y + 1] != "1"):
-                self._position = (x-1,y+1)
+                self._position.append(x-1)
+                self._position.append(y+1)
             elif ([x - 1][y - 1] != "1"):
-                self._position = (x-1,y-1)
+                self._position.append(x-1)
+                self._position.append(y-1)
             else:
                 print("ERROR: No starting position available")
                 return False 
             return True
         else:
-            self._position = (x,y)
+            self._position.append(x)
+            self._position.append(y)
             return True

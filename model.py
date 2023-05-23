@@ -32,25 +32,55 @@ class Model:
         elif level == 3:
             self._current_level = self.Map._get_level(3)
 
-    def _move_pacman(self, direction):
-        if direction == "w":
-            self.Pacman._position[1] += 1
-        elif direction == "s":
-            self.Pacman._position[1] -= 1
-        elif direction == "d":
-            self.Pacman._position[0] += 1
-        elif direction == "a":
-            self.Pacman._position[0] -= 1
-        else:
-            print("ERROR in _move_pacman")
-
     def _check_for_walls_and_path(self, row, column):
         if(self._current_level[row][column] == "1"):
             return row, column, 1
         elif (self._current_level[row][column] == "0"):
             return row, column, 0
-             
-        
+
+    def _is_move_valid(self, direction):
+        for i in range(len(self.Pacman._position)):
+            print(self.Pacman._position[i])
+            
+        if direction == "w":
+            row = self.Pacman._position[0]
+            column = self.Pacman._position[1]-1
+            if self._current_level[row][column] == "0":
+                self.Pacman._position[1] -= 1
+                return 1
+            elif self._current_level[row][column] == "1":
+                print("ERROR: You are trying to run into a wall")
+                return 0
+        elif direction == "a":
+            row = self.Pacman._position[0]-1
+            column = self.Pacman._position[1]
+            if self._current_level[row][column] == "0":
+                self.Pacman._position[0] -= 1
+                return 1
+            elif self._current_level[row][column] == "1":
+                print("ERROR: You are trying to run into a wall")
+                return 0
+        elif direction == "s":
+            row = self.Pacman._position[0]
+            column = self.Pacman._position[1] +1
+            if self._current_level[row][column] == "0":
+                self.Pacman._position[1] += 1
+                return 1
+            elif self._current_level[row][column] == "1":
+                print("ERROR: You are trying to run into a wall")
+                return 0
+        elif direction == "d":
+            row = self.Pacman._position[0] + 1
+            column = self.Pacman._position[1]
+            if self._current_level[row][column] == "0":
+                self.Pacman._position[0] += 1
+                return 1
+            elif self._current_level[row][column] == "1":
+                print("ERROR: You are trying to run into a wall")
+                return 0
+        else:
+            print("Not part of the controls")
+            return 0     
 
     def _move_ghost(self, obj):
         pass

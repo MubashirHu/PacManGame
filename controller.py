@@ -22,18 +22,34 @@ class Controller:
         
         self.my_view._draw_shape(self.my_model.Pacman._position[0], self.my_model.Pacman._position[1], 2)
     
-    def _update_pacman_position(self, direction):
+    def _get_user_input(self, direction):
         if(direction == "w"):
-            self.my_view._draw_shape(self.my_model.Pacman._position[0], self.my_model.Pacman._position[1]-1, 2)
+            move_allowed = self.my_model._is_move_valid(direction)
+            if(move_allowed):
+                self.my_view._draw_shape(self.my_model.Pacman._position[0], self.my_model.Pacman._position[1], 2)
+            else:
+                print("ERROR: move not allowed...There is a wall")
         if(direction == "a"):
-            self.my_view._draw_shape(self.my_model.Pacman._position[0]-1, self.my_model.Pacman._position[1], 2)
+            move_allowed = self.my_model._is_move_valid(direction)
+            if(move_allowed):
+                self.my_view._draw_shape(self.my_model.Pacman._position[0], self.my_model.Pacman._position[1], 2)
+            else:
+                print("ERROR: move not allowed...There is a wall")
         if(direction == "s"):
-            self.my_view._draw_shape(self.my_model.Pacman._position[0], self.my_model.Pacman._position[1]+1, 2)
+            move_allowed = self.my_model._is_move_valid(direction)
+            if(move_allowed):
+                self.my_view._draw_shape(self.my_model.Pacman._position[0], self.my_model.Pacman._position[1], 2)
+            else:
+                print("ERROR: move not allowed...There is a wall")
         if(direction == "d"):
-            self.my_view._draw_shape(self.my_model.Pacman._position[0]+1, self.my_model.Pacman._position[1], 2)
+            move_allowed = self.my_model._is_move_valid(direction)
+            if(move_allowed):
+                self.my_view._draw_shape(self.my_model.Pacman._position[0], self.my_model.Pacman._position[1], 2)
+            else:
+                print("ERROR: move not allowed...There is a wall")
 
     def _set_controls(self):
-        self.my_view._root.bind("w", lambda event: self._update_pacman_position("w"))
-        self.my_view._root.bind("a", lambda event: self._update_pacman_position("a"))
-        self.my_view._root.bind("s", lambda event: self._update_pacman_position("s"))
-        self.my_view._root.bind("d", lambda event: self._update_pacman_position("d"))
+        self.my_view._root.bind("w", lambda event: self._get_user_input("w"))
+        self.my_view._root.bind("a", lambda event: self._get_user_input("a"))
+        self.my_view._root.bind("s", lambda event: self._get_user_input("s"))
+        self.my_view._root.bind("d", lambda event: self._get_user_input("d"))
