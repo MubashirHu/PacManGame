@@ -39,9 +39,6 @@ class Model:
             return row, column, 0
 
     def _is_move_valid(self, direction):
-        for i in range(len(self.Pacman._position)):
-            print(self.Pacman._position[i])
-            
         if direction == "w":
             row = self.Pacman._position[0]
             column = self.Pacman._position[1]-1

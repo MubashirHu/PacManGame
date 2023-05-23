@@ -48,8 +48,20 @@ class Controller:
             else:
                 print("ERROR: move not allowed...There is a wall")
 
+        self.clear()
+        #print coordinates
+        for i in range(len(self.my_model.Pacman._position)):
+            print(self.my_model.Pacman._position[i])
+
+        #print row and column count
+        self.my_model.Map._get_number_of_rows
+        self.my_model.Map._get_number_of_columns            
+
     def _set_controls(self):
         self.my_view._root.bind("w", lambda event: self._get_user_input("w"))
         self.my_view._root.bind("a", lambda event: self._get_user_input("a"))
         self.my_view._root.bind("s", lambda event: self._get_user_input("s"))
         self.my_view._root.bind("d", lambda event: self._get_user_input("d"))
+
+    def clear(self):
+        os.system('cls' if os.name == 'nt' else 'clear')

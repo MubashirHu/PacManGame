@@ -8,6 +8,12 @@ class Maze:
     def _get_number_of_cells(self):
         return self._cells
     
+    def _get_number_of_rows(self):
+        return self._rows
+    
+    def _get_number_of_columns(self):
+        return self._columns
+        
     def _get_level(self, level):
         self._rows = 0
         self._columns = 0 
@@ -28,6 +34,9 @@ class Maze:
                 #print(eachline)
                 
             self._columns = len(self._level[0]) - 1
+
+        print("row count", self._rows)
+        print("columns count", self._columns)
 
         return self._level
         
