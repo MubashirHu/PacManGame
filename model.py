@@ -40,15 +40,6 @@ class Model:
 
     def _is_move_valid(self, direction):
         if direction == "w":
-            row = self.Pacman._position[0]
-            column = self.Pacman._position[1]-1
-            if self._current_level[row][column] == "0":
-                self.Pacman._position[1] -= 1
-                return 1
-            elif self._current_level[row][column] == "1":
-                print("ERROR: You are trying to run into a wall")
-                return 0
-        elif direction == "a":
             row = self.Pacman._position[0]-1
             column = self.Pacman._position[1]
             if self._current_level[row][column] == "0":
@@ -57,20 +48,29 @@ class Model:
             elif self._current_level[row][column] == "1":
                 print("ERROR: You are trying to run into a wall")
                 return 0
-        elif direction == "s":
+        elif direction == "a":
             row = self.Pacman._position[0]
-            column = self.Pacman._position[1] +1
+            column = self.Pacman._position[1]-1
             if self._current_level[row][column] == "0":
-                self.Pacman._position[1] += 1
+                self.Pacman._position[1] -= 1
+                return 1
+            elif self._current_level[row][column] == "1":
+                print("ERROR: You are trying to run into a wall")
+                return 0
+        elif direction == "s":
+            row = self.Pacman._position[0]+1
+            column = self.Pacman._position[1]
+            if self._current_level[row][column] == "0":
+                self.Pacman._position[0] += 1
                 return 1
             elif self._current_level[row][column] == "1":
                 print("ERROR: You are trying to run into a wall")
                 return 0
         elif direction == "d":
-            row = self.Pacman._position[0] + 1
-            column = self.Pacman._position[1]
+            row = self.Pacman._position[0]
+            column = self.Pacman._position[1] +1
             if self._current_level[row][column] == "0":
-                self.Pacman._position[0] += 1
+                self.Pacman._position[1] += 1
                 return 1
             elif self._current_level[row][column] == "1":
                 print("ERROR: You are trying to run into a wall")

@@ -48,7 +48,7 @@ class Controller:
             else:
                 print("ERROR: move not allowed...There is a wall")
 
-        self.clear()
+        #self.clear()
         #print coordinates
         for i in range(len(self.my_model.Pacman._position)):
             print(self.my_model.Pacman._position[i])

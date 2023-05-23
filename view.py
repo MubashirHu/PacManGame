@@ -20,7 +20,7 @@ class View:
         self._canvas = Canvas(self._root, width=800, height=1000, bg='white')
         self._canvas.pack()
 
-    def _draw_shape(self, x_coordinate, y_coordinate, shape):
+    def _draw_shape(self, y_coordinate, x_coordinate, shape):
 
         if (shape == 1):
             self.add_shape(self, x_coordinate, y_coordinate, self._shape_size, "square", self._wall_color)
