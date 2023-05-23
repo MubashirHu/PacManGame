@@ -3,6 +3,7 @@ from src.ghost import *
 from src.pacman import *
 from src.maze import *
 from src.util import *
+
 class Model:
     def __init__(self):
 
@@ -16,6 +17,7 @@ class Model:
 
         #data
         self._current_level = []
+        self._pacman_movement_direction = Direction._idle
 
     def _initialize(self):
         self._set_level(1)
@@ -37,47 +39,73 @@ class Model:
             return row, column, 1
         elif (self._current_level[row][column] == "0"):
             return row, column, 0
+        
+    def _move_pacman_in_direction(self, direction):
+        if direction == Direction._up :
+            pass
+        elif direction == Direction._down:
+            pass
+        elif direction == Direction._left:
+            pass
+        elif direction == Direction._right:
+            pass
+        elif direction == Direction._idle:
+            pass
 
     def _is_move_valid(self, direction):
-        if direction == "w":
+        if direction == Direction._up:
+            self._pacman_movement_direction = Direction._up
             row = self.Pacman._position[0]-1
             column = self.Pacman._position[1]
             if self._current_level[row][column] == "0":
                 self.Pacman._position[0] -= 1
                 return 1
             elif self._current_level[row][column] == "1":
-                print("ERROR: You are trying to run into a wall")
+                self._pacman_movement_direction = Direction._idle
                 return 0
-        elif direction == "a":
+        elif direction == Direction._left:
+            self._pacman_movement_direction = Direction._left
             row = self.Pacman._position[0]
             column = self.Pacman._position[1]-1
             if self._current_level[row][column] == "0":
                 self.Pacman._position[1] -= 1
                 return 1
             elif self._current_level[row][column] == "1":
-                print("ERROR: You are trying to run into a wall")
+                self._pacman_movement_direction = Direction._idle
                 return 0
-        elif direction == "s":
+            
+        elif direction == Direction._down:
             row = self.Pacman._position[0]+1
             column = self.Pacman._position[1]
             if self._current_level[row][column] == "0":
                 self.Pacman._position[0] += 1
                 return 1
             elif self._current_level[row][column] == "1":
-                print("ERROR: You are trying to run into a wall")
+                self._pacman_movement_direction = Direction._idle
                 return 0
-        elif direction == "d":
+            
+        elif direction == Direction._right:
             row = self.Pacman._position[0]
             column = self.Pacman._position[1] +1
             if self._current_level[row][column] == "0":
                 self.Pacman._position[1] += 1
                 return 1
             elif self._current_level[row][column] == "1":
-                print("ERROR: You are trying to run into a wall")
+                self._pacman_movement_direction = Direction._idle
                 return 0
+            
+        elif direction == Direction._idle:
+            row = self.Pacman._position[0]
+            column = self.Pacman._position[1]
+            if self._current_level[row][column] == "0":
+                return 1
+            elif self._current_level[row][column] == "1":
+                self._pacman_movement_direction = Direction._idle
+                return 0  
         else:
             print("Not part of the controls")
-            return 0     
+            return 0
+             
 
     def _move_ghost(self, obj):
         pass

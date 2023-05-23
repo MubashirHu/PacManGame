@@ -21,32 +21,53 @@ class Controller:
                 self.my_view._draw_shape(location_and_shape[0], location_and_shape[1], location_and_shape[2])
         
         self.my_view._draw_shape(self.my_model.Pacman._position[0], self.my_model.Pacman._position[1], 2)
-    
+
+    def _update_position_of_pacman(self):
+        if(self.my_model._pacman_movement_direction == Direction._up):
+            _move_valid = self.my_model._is_move_valid(Direction._up)
+            if(_move_valid):
+                self.my_view._draw_shape(self.my_model.Pacman._position[0], self.my_model.Pacman._position[1], 2)
+            else:
+                self.my_model._pacman_movement_direction._idle
+
+        elif (self.my_model._pacman_movement_direction == Direction._down):
+            _move_valid = self.my_model._is_move_valid(Direction._down)
+            if(_move_valid):
+                self.my_view._draw_shape(self.my_model.Pacman._position[0], self.my_model.Pacman._position[1], 2)
+            else:
+                self.my_model._pacman_movement_direction._idle
+        elif (self.my_model._pacman_movement_direction == Direction._left):
+            _move_valid = self.my_model._is_move_valid(Direction._left)
+            if(_move_valid):
+                self.my_view._draw_shape(self.my_model.Pacman._position[0], self.my_model.Pacman._position[1], 2)
+            else:
+                self.my_model._pacman_movement_direction._idle
+        elif (self.my_model._pacman_movement_direction == Direction._right):
+            _move_valid = self.my_model._is_move_valid(Direction._right)
+            if(_move_valid):
+                self.my_view._draw_shape(self.my_model.Pacman._position[0], self.my_model.Pacman._position[1], 2)
+            else:
+                self.my_model._pacman_movement_direction._idle
+        elif (self.my_model._pacman_movement_direction == Direction._idle):
+            _move_valid = self.my_model._is_move_valid(Direction._idle)
+            if(_move_valid):
+                self.my_view._draw_shape(self.my_model.Pacman._position[0], self.my_model.Pacman._position[1], 2)
+            else:
+                self.my_model._pacman_movement_direction._idle
+        
     def _get_user_input(self, direction):
         if(direction == "w"):
-            move_allowed = self.my_model._is_move_valid(direction)
-            if(move_allowed):
-                self.my_view._draw_shape(self.my_model.Pacman._position[0], self.my_model.Pacman._position[1], 2)
-            else:
-                print("ERROR: move not allowed...There is a wall")
+            self.my_model._pacman_movement_direction = Direction._up
+            self._update_position_of_pacman()
         if(direction == "a"):
-            move_allowed = self.my_model._is_move_valid(direction)
-            if(move_allowed):
-                self.my_view._draw_shape(self.my_model.Pacman._position[0], self.my_model.Pacman._position[1], 2)
-            else:
-                print("ERROR: move not allowed...There is a wall")
+            self.my_model._pacman_movement_direction = Direction._left
+            self._update_position_of_pacman()
         if(direction == "s"):
-            move_allowed = self.my_model._is_move_valid(direction)
-            if(move_allowed):
-                self.my_view._draw_shape(self.my_model.Pacman._position[0], self.my_model.Pacman._position[1], 2)
-            else:
-                print("ERROR: move not allowed...There is a wall")
+            self.my_model._pacman_movement_direction = Direction._down
+            self._update_position_of_pacman()
         if(direction == "d"):
-            move_allowed = self.my_model._is_move_valid(direction)
-            if(move_allowed):
-                self.my_view._draw_shape(self.my_model.Pacman._position[0], self.my_model.Pacman._position[1], 2)
-            else:
-                print("ERROR: move not allowed...There is a wall")
+            self.my_model._pacman_movement_direction = Direction._right
+            self._update_position_of_pacman()
 
         #self.clear()
         #print coordinates
