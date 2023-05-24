@@ -26,7 +26,14 @@ class Controller:
                 self.my_view._draw_shape(location_and_shape[0], location_and_shape[1], location_and_shape[2])
         
         self.my_view._draw_shape(self.my_model.Pacman._position[0], self.my_model.Pacman._position[1], 2)
-        
+
+    def _update_pacman_position(self):
+        if self.my_model._pacman_movement_direction != Direction._idle:
+            if self._updated_position_of_pacman_in_model():
+                self._updated_position_of_pacman_in_view()
+        self.my_view._root.after(1000, self._update_pacman_position)  # Schedule
+        return 1
+
     def _get_user_input(self, direction):
         if(direction == "w"):
             self.my_model._pacman_movement_direction = Direction._up
@@ -37,19 +44,9 @@ class Controller:
         if(direction == "d"):
             self.my_model._pacman_movement_direction = Direction._right
 
-        if(self._update_position_of_pacman_in_model()):
-            self.my_view._root.after(1000, self._update_position_of_pacman_in_view)
-            
-        #self.clear()
-        #print coordinates
-        for i in range(len(self.my_model.Pacman._position)):
-            print(self.my_model.Pacman._position[i])
+        self._update_pacman_position()   
 
-        #print row and column count
-        self.my_model.Map._get_number_of_rows
-        self.my_model.Map._get_number_of_columns   
-
-    def _update_position_of_pacman_in_model(self):
+    def _updated_position_of_pacman_in_model(self):
         if(self.my_model._pacman_movement_direction == Direction._up):
             _move_valid = self.my_model._is_move_valid(Direction._up)
             if(_move_valid):
@@ -84,8 +81,9 @@ class Controller:
         elif (self.my_model._pacman_movement_direction == Direction._idle):
             return 0
         
-    def _update_position_of_pacman_in_view(self):
+    def _updated_position_of_pacman_in_view(self):
         self.my_view._draw_shape(self.my_model.Pacman._position[0], self.my_model.Pacman._position[1], 2)
+        return 1
         
     def clear(self):
         os.system('cls' if os.name == 'nt' else 'clear')

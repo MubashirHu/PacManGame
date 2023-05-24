@@ -5,7 +5,6 @@ import time
 class View:
 
     def __init__(self):
-
         #GUI window
         self._root = Tk()
         self._canvas = None 
@@ -24,16 +23,22 @@ class View:
     def _draw_shape(self, y_coordinate, x_coordinate, shape):
         if (shape == 1):
             self.add_shape(self, x_coordinate, y_coordinate, self._shape_size, "square", self._wall_color)
+            self._root.update()
             return 1
         elif(shape == 0):
             self.add_shape(self, x_coordinate, y_coordinate, self._shape_size, "square", self._path_color)
+            self._root.update()
             return 1
         elif(shape == 2):
             self._draw_pacman_in_position(x_coordinate, y_coordinate)
+            self._root.update()
             return 1
         else:
             print("ERROR: Unidentified shape")
+            self._root.update()
             return 0
+        
+        
 
     def _draw_pacman_in_position(self, x_coordinate, y_coordinate):
         self._canvas.delete("pacman")
