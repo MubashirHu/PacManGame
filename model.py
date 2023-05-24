@@ -54,7 +54,6 @@ class Model:
 
     def _is_move_valid(self, direction):
         if direction == Direction._up:
-            self._pacman_movement_direction = Direction._up
             row = self.Pacman._position[0]-1
             column = self.Pacman._position[1]
             if self._current_level[row][column] == "0":
@@ -63,8 +62,8 @@ class Model:
             elif self._current_level[row][column] == "1":
                 self._pacman_movement_direction = Direction._idle
                 return 0
+            
         elif direction == Direction._left:
-            self._pacman_movement_direction = Direction._left
             row = self.Pacman._position[0]
             column = self.Pacman._position[1]-1
             if self._current_level[row][column] == "0":

@@ -8,7 +8,6 @@ def main():
 
     myController._initialize_game()
     myController._display_game()
-    myController._set_controls()
     myController.my_view._root.mainloop()
     
 if __name__ == "__main__":
