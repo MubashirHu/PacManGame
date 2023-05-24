@@ -37,9 +37,9 @@ class Controller:
         if(direction == "d"):
             self.my_model._pacman_movement_direction = Direction._right
 
-        while(self.my_model._pacman_movement_direction != Direction._idle):
-            self._update_position_of_pacman()
-
+        if(self._update_position_of_pacman_in_model()):
+            self.my_view._root.after(1000, self._update_position_of_pacman_in_view)
+            
         #self.clear()
         #print coordinates
         for i in range(len(self.my_model.Pacman._position)):
@@ -49,12 +49,11 @@ class Controller:
         self.my_model.Map._get_number_of_rows
         self.my_model.Map._get_number_of_columns   
 
-    def _update_position_of_pacman(self):
+    def _update_position_of_pacman_in_model(self):
         if(self.my_model._pacman_movement_direction == Direction._up):
             _move_valid = self.my_model._is_move_valid(Direction._up)
             if(_move_valid):
-                if(self.my_view._draw_shape(self.my_model.Pacman._position[0], self.my_model.Pacman._position[1], 2)):
-                    return 1
+                return 1
             else:
                 self.my_model._pacman_movement_direction._idle
                 return 0
@@ -62,8 +61,7 @@ class Controller:
         elif (self.my_model._pacman_movement_direction == Direction._down):
             _move_valid = self.my_model._is_move_valid(Direction._down)
             if(_move_valid):
-                if(self.my_view._draw_shape(self.my_model.Pacman._position[0], self.my_model.Pacman._position[1], 2)):
-                    return 1
+                return 1
             else:
                 self.my_model._pacman_movement_direction._idle
                 return 0
@@ -71,8 +69,7 @@ class Controller:
         elif (self.my_model._pacman_movement_direction == Direction._left):
             _move_valid = self.my_model._is_move_valid(Direction._left)
             if(_move_valid):
-                if(self.my_view._draw_shape(self.my_model.Pacman._position[0], self.my_model.Pacman._position[1], 2)):
-                    return 1
+                return 1
             else:
                 self.my_model._pacman_movement_direction._idle
                 return 0
@@ -80,13 +77,15 @@ class Controller:
         elif (self.my_model._pacman_movement_direction == Direction._right):
             _move_valid = self.my_model._is_move_valid(Direction._right)
             if(_move_valid):
-                if(self.my_view._draw_shape(self.my_model.Pacman._position[0], self.my_model.Pacman._position[1], 2)):
-                    return 1
+                return 1
             else:
                 self.my_model._pacman_movement_direction._idle
                 return 0
         elif (self.my_model._pacman_movement_direction == Direction._idle):
             return 0
+        
+    def _update_position_of_pacman_in_view(self):
+        self.my_view._draw_shape(self.my_model.Pacman._position[0], self.my_model.Pacman._position[1], 2)
         
     def clear(self):
         os.system('cls' if os.name == 'nt' else 'clear')
