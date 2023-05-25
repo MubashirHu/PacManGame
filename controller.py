@@ -15,6 +15,7 @@ class Controller:
         self.my_view._root.bind("d", lambda event: self._get_user_input("d"))
 
         self._last_key_pressed = None
+        self._pacman_update_event = 1
 
     def _initialize_game(self):
         if self.my_model._initialize():
@@ -30,10 +31,13 @@ class Controller:
         self.my_view._draw_shape(self.my_model.Pacman._position[0], self.my_model.Pacman._position[1], 2)
 
     def _update_pacman_position(self):
+        if self._pacman_update_event is not None:
+            self.my_view._root.after_cancel(self._pacman_update_event)
+
         if self.my_model._pacman_movement_direction != Direction._idle:
             if self._updated_position_of_pacman_in_model():
                 self._updated_position_of_pacman_in_view()
-        self.my_view._root.after(1000, self._update_pacman_position)  # Schedule
+        self._pacman_update_event = self.my_view._root.after(500, self._update_pacman_position)  # Schedule
         return 1
 
     def _get_user_input(self, direction):
