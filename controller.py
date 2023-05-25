@@ -14,12 +14,14 @@ class Controller:
         self.my_view._root.bind("s", lambda event: self._get_user_input("s"))
         self.my_view._root.bind("d", lambda event: self._get_user_input("d"))
 
+        self._last_key_pressed = None
+
     def _initialize_game(self):
         if self.my_model._initialize():
-            self.my_view._initialize()
-            print("Both view and model have been initialized...")
+            if self.my_view._initialize():
+                print("Both view and model have been initialized...")
 
-    def _display_game(self):
+    def _display_initial_positions(self):
         for i in range(self.my_model.Map._rows):
             for j in range(self.my_model.Map._columns):
                 location_and_shape = self.my_model._check_for_walls_and_path(i, j)       
@@ -36,15 +38,36 @@ class Controller:
 
     def _get_user_input(self, direction):
         if(direction == "w"):
-            self.my_model._pacman_movement_direction = Direction._up
-        if(direction == "a"):
-            self.my_model._pacman_movement_direction = Direction._left
-        if(direction == "s"):
-            self.my_model._pacman_movement_direction = Direction._down
-        if(direction == "d"):
-            self.my_model._pacman_movement_direction = Direction._right
+            if self._last_key_pressed == "w":
+                pass
+            else:
+                self.my_model._pacman_movement_direction = Direction._up
+                self._last_key_pressed = "w"
+                self._update_pacman_position()
 
-        self._update_pacman_position()   
+        if(direction == "a"):
+            if self. _last_key_pressed == "a":
+                pass
+            else:
+                self._last_key_pressed = "a"
+                self.my_model._pacman_movement_direction = Direction._left
+                self._update_pacman_position()
+
+        if(direction == "s"):
+            if self._last_key_pressed == "s":
+                pass
+            else:
+                self._last_key_pressed = "s"
+                self.my_model._pacman_movement_direction = Direction._down
+                self._update_pacman_position()
+
+        if(direction == "d"):
+            if self._last_key_pressed == "d":
+                pass
+            else:
+                self._last_key_pressed = "d"
+                self.my_model._pacman_movement_direction = Direction._right   
+                self._update_pacman_position()
 
     def _updated_position_of_pacman_in_model(self):
         if(self.my_model._pacman_movement_direction == Direction._up):
