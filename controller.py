@@ -15,6 +15,7 @@ class Controller:
         self.my_view._root.bind("d", lambda event: self._get_user_input("d"))
 
         self._last_key_pressed = None
+        self._last_direction = None
         self._pacman_update_event = 1
 
     def _initialize_game(self):
@@ -37,12 +38,14 @@ class Controller:
         if self.my_model._pacman_movement_direction != Direction._idle:
             if self._updated_position_of_pacman_in_model():
                 self._updated_position_of_pacman_in_view()
-        self._pacman_update_event = self.my_view._root.after(500, self._update_pacman_position)  # Schedule
+            else:
+                self.my_model._pacman_movement_direction = self._last_direction
+        self._pacman_update_event = self.my_view._root.after(100, self._update_pacman_position)  # Schedule
         return 1
 
     def _get_user_input(self, direction):
         if(direction == "w"):
-            if self._last_key_pressed == "w":
+            if self._last_key_pressed == "w" and self._last_direction == Direction._up:
                 pass
             else:
                 self.my_model._pacman_movement_direction = Direction._up
@@ -50,7 +53,7 @@ class Controller:
                 self._update_pacman_position()
 
         if(direction == "a"):
-            if self. _last_key_pressed == "a":
+            if self. _last_key_pressed == "a" and self._last_direction == Direction._left:
                 pass
             else:
                 self._last_key_pressed = "a"
@@ -58,7 +61,7 @@ class Controller:
                 self._update_pacman_position()
 
         if(direction == "s"):
-            if self._last_key_pressed == "s":
+            if self._last_key_pressed == "s" and self._last_direction == Direction._down:
                 pass
             else:
                 self._last_key_pressed = "s"
@@ -66,7 +69,7 @@ class Controller:
                 self._update_pacman_position()
 
         if(direction == "d"):
-            if self._last_key_pressed == "d":
+            if self._last_key_pressed == "d" and self._last_direction == Direction._right :
                 pass
             else:
                 self._last_key_pressed = "d"
@@ -77,6 +80,7 @@ class Controller:
         if(self.my_model._pacman_movement_direction == Direction._up):
             _move_valid = self.my_model._is_move_valid(Direction._up)
             if(_move_valid):
+                self._last_direction = Direction._up
                 return 1
             else:
                 self.my_model._pacman_movement_direction._idle
@@ -85,6 +89,7 @@ class Controller:
         elif (self.my_model._pacman_movement_direction == Direction._down):
             _move_valid = self.my_model._is_move_valid(Direction._down)
             if(_move_valid):
+                self._last_direction = Direction._down
                 return 1
             else:
                 self.my_model._pacman_movement_direction._idle
@@ -93,6 +98,7 @@ class Controller:
         elif (self.my_model._pacman_movement_direction == Direction._left):
             _move_valid = self.my_model._is_move_valid(Direction._left)
             if(_move_valid):
+                self._last_direction = Direction._left
                 return 1
             else:
                 self.my_model._pacman_movement_direction._idle
@@ -101,6 +107,7 @@ class Controller:
         elif (self.my_model._pacman_movement_direction == Direction._right):
             _move_valid = self.my_model._is_move_valid(Direction._right)
             if(_move_valid):
+                self._last_direction = Direction._right
                 return 1
             else:
                 self.my_model._pacman_movement_direction._idle
@@ -109,6 +116,7 @@ class Controller:
             return 0
         
     def _updated_position_of_pacman_in_view(self):
+        self.my_view._draw_shape(self.my_model.Pacman._position[0], self.my_model.Pacman._position[1], 3)
         self.my_view._draw_shape(self.my_model.Pacman._position[0], self.my_model.Pacman._position[1], 2)
         return 1
         

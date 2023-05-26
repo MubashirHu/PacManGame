@@ -17,7 +17,6 @@ class Model:
 
         #data
         self._current_level = []
-        self._current_level_path_locations = []
         self._pacman_movement_direction = Direction._idle
 
     def _initialize(self):
@@ -39,8 +38,6 @@ class Model:
         if(self._current_level[row][column] == "1"):
             return row, column, 1 # wall
         elif (self._current_level[row][column] == "0"):
-            tmp = [row,column]
-            self._current_level_path_locations.append(tmp)
             return row, column, 0 # path
         
     def _move_pacman_in_direction(self, direction):

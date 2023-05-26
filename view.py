@@ -12,6 +12,7 @@ class View:
         self._wall_color = "blue"
         self._path_color = "black"
         self._pacman_color = "yellow"
+        self._path_covered_color = "green"
         
     def _initialize(self):
         self._root.title('PacMan Game')
@@ -31,12 +32,12 @@ class View:
         elif(shape == 2):
             self._draw_pacman_in_position(x_coordinate, y_coordinate)
             return 1
+        elif(shape == 3):
+            self.add_shape(self, x_coordinate, y_coordinate, self._shape_size, "square", self._path_covered_color)
         else:
             print("ERROR: Unidentified shape")
             return 0
         
-        
-
     def _draw_pacman_in_position(self, x_coordinate, y_coordinate):
         self._canvas.delete("pacman")
         self.add_shape(self, x_coordinate, y_coordinate, self._shape_size, "circle", self._pacman_color)
