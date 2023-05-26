@@ -1,7 +1,8 @@
+from src.util import *
 class PacMan:
     def __init__(self):
         self._position = []
-        self._direction = ""
+        self._movement_direction = Direction._idle
         self._lives = 0
         self._current_score = 0
         self._speed = 0
@@ -15,7 +16,7 @@ class PacMan:
         self._position = (row,column)
 
     def _set_direction(self, direction):
-        self._direction = direction
+        self._movement_direction = direction
 
     def _set_lives(self, lives):
         self._lives = lives

@@ -17,7 +17,6 @@ class Model:
 
         #data
         self._current_level = []
-        self._pacman_movement_direction = Direction._idle
 
     def _initialize(self):
         self._set_level(1)
@@ -60,7 +59,7 @@ class Model:
                 self.Pacman._position[0] -= 1
                 return 1
             elif self._current_level[row][column] == "1":
-                self._pacman_movement_direction = Direction._idle
+                self.Pacman._movement_direction = Direction._idle
                 return 0
             
         elif direction == Direction._left:
@@ -70,7 +69,7 @@ class Model:
                 self.Pacman._position[1] -= 1
                 return 1
             elif self._current_level[row][column] == "1":
-                self._pacman_movement_direction = Direction._idle
+                self.Pacman._movement_direction = Direction._idle
                 return 0
             
         elif direction == Direction._down:
@@ -80,7 +79,7 @@ class Model:
                 self.Pacman._position[0] += 1
                 return 1
             elif self._current_level[row][column] == "1":
-                self._pacman_movement_direction = Direction._idle
+                self.Pacman._movement_direction = Direction._idle
                 return 0
             
         elif direction == Direction._right:
@@ -90,7 +89,7 @@ class Model:
                 self.Pacman._position[1] += 1
                 return 1
             elif self._current_level[row][column] == "1":
-                self._pacman_movement_direction = Direction._idle
+                self.Pacman._movement_direction = Direction._idle
                 return 0
             
         elif direction == Direction._idle:
@@ -99,7 +98,7 @@ class Model:
             if self._current_level[row][column] == "0":
                 return 1
             elif self._current_level[row][column] == "1":
-                self._pacman_movement_direction = Direction._idle
+                self.Pacman._movement_direction = Direction._idle
                 return 0  
         else:
             print("Not part of the controls")

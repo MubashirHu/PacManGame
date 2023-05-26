@@ -8,7 +8,7 @@ class View:
         #GUI window
         self._root = Tk()
         self._canvas = None 
-        self._shape_size = 50
+        self._shape_size = 30
         self._wall_color = "blue"
         self._path_color = "black"
         self._pacman_color = "yellow"
@@ -16,9 +16,9 @@ class View:
         
     def _initialize(self):
         self._root.title('PacMan Game')
-        self._root.geometry('800x1000')
+        self._root.geometry('1300x1300')
 
-        self._canvas = Canvas(self._root, width=800, height=1000, bg='white')
+        self._canvas = Canvas(self._root, width=1200, height=1200, bg='white')
         self._canvas.pack()
         return 1
 
