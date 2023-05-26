@@ -10,18 +10,30 @@ class Model:
         #objects
         self.Map = Maze()
         self.Pacman = PacMan()
+        self.Ghosts = []
+
         self.GhostBlinky = Ghost("red")        
         self.GhostPinky = Ghost("pink")
         self.GhostInky = Ghost("cyan")
         self.GhostClyde = Ghost("orange")
+
+        self.Ghosts.append(self.GhostBlinky)
+        self.Ghosts.append(self.GhostPinky)
+        self.Ghosts.append(self.GhostInky)
+        self.Ghosts.append(self.GhostClyde)
 
         #data
         self._current_level = []
 
     def _initialize(self):
         self._set_level(1)
-        self.Pacman._get_pacman_starting_position_from_current_level(self.Map, self._current_level)
         
+    
+        self.Pacman._get_pacman_starting_position_from_current_level(self.Map, self._current_level)
+
+        for i in range (len(self.Ghosts)):
+            self.Ghosts[i]._get_starting_position(self.Map, self._current_level)
+
         return 1
         #add pacman
         
@@ -35,9 +47,11 @@ class Model:
 
     def _check_for_walls_and_path(self, row, column):
         if(self._current_level[row][column] == "1"):
-            return row, column, 1 # wall
+            return row, column, gamePiece._wall # wall
         elif (self._current_level[row][column] == "0"):
-            return row, column, 0 # path
+            return row, column, gamePiece._pellet # path
+        elif (self._current_level[row][column] == "2"):
+            return row, column, gamePiece._ghost_house # ghost house color
         
     def _move_pacman_in_direction(self, direction):
         if direction == Direction._up :

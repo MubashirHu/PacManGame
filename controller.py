@@ -28,10 +28,13 @@ class Controller:
         for i in range(self.my_model.Map._rows):
             for j in range(self.my_model.Map._columns):
                 location_and_shape = self.my_model._check_for_walls_and_path(i, j)       
-                self.my_view._draw_shape(location_and_shape[0], location_and_shape[1], location_and_shape[2])
+                self.my_view._draw_shape(location_and_shape[0], location_and_shape[1], location_and_shape[2])     
         
-        self.my_view._draw_shape(self.my_model.Pacman._position[0], self.my_model.Pacman._position[1], 2)
+        self.my_view._draw_shape(self.my_model.Pacman._position[0], self.my_model.Pacman._position[1], gamePiece._pacman)
 
+        #for i in range(len(self.my_model.Ghosts)):
+        #    self.my_view._draw_shape(self.my_model.Ghosts[i])
+        
     def _update_pacman_position(self):
         if self._pacman_update_event is not None:
             self.my_view._root.after_cancel(self._pacman_update_event)
@@ -41,6 +44,7 @@ class Controller:
                 self._updated_position_of_pacman_in_view()
             else:
                 self.my_model.Pacman._movement_direction = self._last_direction
+
         self._pacman_update_event = self.my_view._root.after(self.schedulingSpeed, self._update_pacman_position)  # Schedule
         return 1
 
@@ -117,8 +121,8 @@ class Controller:
             return 0
         
     def _updated_position_of_pacman_in_view(self):
-        self.my_view._draw_shape(self.my_model.Pacman._position[0], self.my_model.Pacman._position[1], 3)
-        self.my_view._draw_shape(self.my_model.Pacman._position[0], self.my_model.Pacman._position[1], 2)
+        self.my_view._draw_shape(self.my_model.Pacman._position[0], self.my_model.Pacman._position[1], gamePiece._pellet) # draw path
+        self.my_view._draw_shape(self.my_model.Pacman._position[0], self.my_model.Pacman._position[1], gamePiece._pacman) # draw pacman
         return 1
         
     def clear(self):

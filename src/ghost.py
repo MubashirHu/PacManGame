@@ -1,14 +1,15 @@
 class Ghost:
     def __init__(self, color):
-        self._coordinate = (0,0)
-        self._direction = ""
+        self._position = []
+        self._ghost_house_position = []
+        self._scatter_target = []
+        self._chase_target = []
         self._color = color
-        self._mode = 0
-        self._speed = 0
-        self._status = 0
-        self._scatter_target = (0,0)
-        self._chase_target = (0,0)
-        self._vulnerability_timer = 0
+        self._direction = None
+        self._mode = None
+        self._speed = None
+        self._status = None
+        self._vulnerability_timer = None
 
     #setters
     def _set_coordinate(self, row, column):
@@ -39,8 +40,8 @@ class Ghost:
         self._vulnerability_timer = timer
 
     #getters
-    def _get_coordinate(self):
-        return self._coordinate
+    def _get_starting_position(self, map_obj, _current_level ):
+        return self._position
     
     def _get_direction(self):
         return self._direction

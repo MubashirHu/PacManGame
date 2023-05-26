@@ -68,23 +68,24 @@ class PacMan:
         return self._power_up_score
     
     def _get_pacman_starting_position_from_current_level(self, map_obj, _current_level):
+        
 
         x = int(map_obj._rows/2)
         y = int(map_obj._columns/2)
         
         if _current_level[x][y] == "1":
             
-            if([x + 1][y + 1] != "1"):
+            if([x + 1][y + 1] != "1"): # bottom right
                 self._position.append(x+1)
                 self._position.append(y+1)
-            elif ([x + 1][y - 1] != "1"):
+            elif ([x + 1][y - 1] != "1"): # bottom left
                 self._position.append(x+1)
                 self._position.append(y-1)
-            elif ([x - 1][y + 1] != "1"):
+            elif ([x - 1][y + 1] != "1"): # top right
                 self._position.append(x-1)
                 self._position.append(y+1)
-            elif ([x - 1][y - 1] != "1"):
-                self._position.append(x-1)
+            elif ([x - 1][y - 1] != "1"): #top left
+                self._position.append(x-1) 
                 self._position.append(y-1)
             else:
                 print("ERROR: No starting position available")

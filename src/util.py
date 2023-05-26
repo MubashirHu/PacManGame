@@ -6,8 +6,9 @@ class Direction(Enum):
     _right = 4
     _idle = 5
 
-class Map(Enum):
+class gamePiece(Enum):
+    _none = 0
     _pacman = 1
     _wall = 2
-    _path = 3
-    _ghost = 4
+    _pellet = 3
+    _ghost_house = 4
