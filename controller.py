@@ -14,6 +14,7 @@ class Controller:
         self.my_view._root.bind("s", lambda event: self._get_user_input("s"))
         self.my_view._root.bind("d", lambda event: self._get_user_input("d"))
 
+        self.schedulingSpeed = 250
         self._last_key_pressed = None
         self._last_direction = None
         self._pacman_update_event = 1
@@ -40,7 +41,7 @@ class Controller:
                 self._updated_position_of_pacman_in_view()
             else:
                 self.my_model._pacman_movement_direction = self._last_direction
-        self._pacman_update_event = self.my_view._root.after(100, self._update_pacman_position)  # Schedule
+        self._pacman_update_event = self.my_view._root.after(self.schedulingSpeed, self._update_pacman_position)  # Schedule
         return 1
 
     def _get_user_input(self, direction):
