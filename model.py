@@ -118,7 +118,6 @@ class Model:
             print("Not part of the controls")
             return 0
              
-
     def _move_ghost(self, obj):
         pass
 
