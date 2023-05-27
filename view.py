@@ -13,8 +13,7 @@ class View:
         self._wall_color = "blue"
         self._pellet_color = "white"
         self._pacman_color = "yellow"
-        self._path_covered_color = "purple"
-        self._ghost_house_color = "purple"
+        self._ghost_house_color = "red"
 
     def _initialize(self):
         self._root.title('PacMan Game')
@@ -26,18 +25,31 @@ class View:
     
     def _draw_shape(self, y_coordinate, x_coordinate, shape):
         if (shape == gamePiece._pellet):
-            self.add_shape(self, x_coordinate, y_coordinate, self._pellet_size, gamePiece._pellet, self._pellet_color)
-            return 1
+            if self.add_shape(self, x_coordinate, y_coordinate, self._pellet_size, gamePiece._pellet, self._pellet_color):
+                return 1
+            else:
+                return 0
+            
         elif(shape == gamePiece._wall):
-            self.add_shape(self, x_coordinate, y_coordinate, self._shape_size, gamePiece._wall, self._wall_color)
-            return 1
+            if self.add_shape(self, x_coordinate, y_coordinate, self._shape_size, gamePiece._wall, self._wall_color):
+                return 1
+            else:
+                return 0
+            
         elif(shape == gamePiece._pacman):
-            self._draw_pacman_in_position(x_coordinate, y_coordinate)
-            self._eat_pellet_in_position(x_coordinate, y_coordinate)
-            return 1
+            if self._draw_pacman_in_position(x_coordinate, y_coordinate):
+                if self._eat_pellet_in_position(x_coordinate, y_coordinate):
+                    return 1
+                else:
+                    return 0
+            else:
+                return 0
+            
         elif(shape == gamePiece._ghost_house):
-            self.add_shape(self, x_coordinate, y_coordinate, self._shape_size, gamePiece._ghost_house, self._ghost_house_color)
-            return 1
+            if self.add_shape(self, x_coordinate, y_coordinate, self._shape_size, gamePiece._ghost_house, self._ghost_house_color):
+                return 1
+            else:
+                return 0
         elif(shape == gamePiece._ghost):
             pass
         else:
@@ -46,43 +58,50 @@ class View:
   
     def _draw_pacman_in_position(self, x_coordinate, y_coordinate):
         self._canvas.delete(gamePiece._pacman)
-        self.add_shape(self, x_coordinate, y_coordinate, self._shape_size, gamePiece._pacman, self._pacman_color)
-        print("pacman position", (x_coordinate,y_coordinate))
+        if self.add_shape(self, x_coordinate, y_coordinate, self._shape_size, gamePiece._pacman, self._pacman_color):
+            return 1
+        else:
+            return 0
     
     def _eat_pellet_in_position(self, x_coordinate, y_coordinate):
-        tag = (x_coordinate, y_coordinate)
-        print("tag",tag)
-
         pellet_id = self._canvas.find_withtag(f"{x_coordinate}_{y_coordinate}")
-        self._canvas.delete(pellet_id)
-        print("pellet in _eat_pellet_in_position",pellet_id, "\n")
+        if pellet_id:
+            self._canvas.delete(pellet_id)
+            return 1
+        else:
+            return 0
         
-    def add_shape(self, tk_obj, i,j, size, shape, color):
-        if shape == gamePiece._pacman:
+    def add_shape(self, tk_obj, i,j, size, gamepiece, color):
+        if gamepiece == gamePiece._pacman:
             x0 = i * size
             y0 = j * size 
             x1 = x0 + size 
             y1 = y0 + size 
             self._canvas.create_oval(x0, y0, x1, y1, tags= gamePiece._pacman, fill=color)
+            return 1
 
-        if shape == gamePiece._pellet:
+        if gamepiece == gamePiece._pellet:
             x0 = i * size
             y0 = j * size
             x1 = x0 + size 
             y1 = y0 + size
             self._canvas.create_oval(x0, y0, x1, y1, tags= f"{i}_{j}", fill=color)
-            print("pellet in add_shape",(i,j))
-        elif shape == gamePiece._wall:
+            return 1
+
+        elif gamepiece == gamePiece._wall:
             x0 = i * size
             y0 = j * size
             x1 = x0 + size
             y1 = y0 + size
             self._canvas.create_rectangle(x0, y0, x1, y1, fill=color)
-        elif shape == gamePiece._ghost_house:
+            return 1
+
+        elif gamepiece == gamePiece._ghost_house:
             x0 = i * size
             y0 = j * size
             x1 = x0 + size
             y1 = y0 + size
             self._canvas.create_rectangle(x0, y0, x1, y1, fill=color)
+            return 1
         else:
-            pass
+            return 0
