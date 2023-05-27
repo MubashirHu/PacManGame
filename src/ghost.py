@@ -1,10 +1,12 @@
 class Ghost:
-    def __init__(self, color):
+    def __init__(self, name, color):
+        self._name = name
+        self._color = color
+
         self._position = []
         self._ghost_house_position = []
         self._scatter_target = []
         self._chase_target = []
-        self._color = color
         self._direction = None
         self._mode = None
         self._speed = None

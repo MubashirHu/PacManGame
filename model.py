@@ -12,10 +12,10 @@ class Model:
         self.Pacman = PacMan()
         self.Ghosts = []
 
-        self.GhostBlinky = Ghost("red")        
-        self.GhostPinky = Ghost("pink")
-        self.GhostInky = Ghost("cyan")
-        self.GhostClyde = Ghost("orange")
+        self.GhostBlinky = Ghost("Blinky","red")        
+        self.GhostPinky = Ghost("Pinky", "pink")
+        self.GhostInky = Ghost("Inky", "cyan")
+        self.GhostClyde = Ghost("Clyde","orange")
 
         self.Ghosts.append(self.GhostBlinky)
         self.Ghosts.append(self.GhostPinky)

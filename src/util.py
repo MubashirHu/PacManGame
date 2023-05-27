@@ -12,3 +12,4 @@ class gamePiece(Enum):
     _wall = 2
     _pellet = 3
     _ghost_house = 4
+    _ghost = 5

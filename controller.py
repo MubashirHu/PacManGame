@@ -14,7 +14,7 @@ class Controller:
         self.my_view._root.bind("s", lambda event: self._get_user_input("s"))
         self.my_view._root.bind("d", lambda event: self._get_user_input("d"))
 
-        self.schedulingSpeed = 250
+        self.schedulingSpeed = 100
         self._last_key_pressed = None
         self._last_direction = None
         self._pacman_update_event = 1
@@ -41,6 +41,7 @@ class Controller:
 
         if self.my_model.Pacman._movement_direction != Direction._idle:
             if self._updated_position_of_pacman_in_model():
+                
                 self._updated_position_of_pacman_in_view()
             else:
                 self.my_model.Pacman._movement_direction = self._last_direction
@@ -121,7 +122,6 @@ class Controller:
             return 0
         
     def _updated_position_of_pacman_in_view(self):
-        self.my_view._draw_shape(self.my_model.Pacman._position[0], self.my_model.Pacman._position[1], gamePiece._pellet) # draw path
         self.my_view._draw_shape(self.my_model.Pacman._position[0], self.my_model.Pacman._position[1], gamePiece._pacman) # draw pacman
         return 1
         
