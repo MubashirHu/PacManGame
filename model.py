@@ -45,7 +45,7 @@ class Model:
         elif level == 3:
             self._current_level = self.Map._get_level(3)
 
-    def _check_for_walls_and_path(self, row, column):
+    def _check_for_walls_and_pellet(self, row, column):
         if(self._current_level[row][column] == "1"):
             return row, column, gamePiece._wall # wall
         elif (self._current_level[row][column] == "0"):
