@@ -14,7 +14,7 @@ class Controller:
         self.my_view._root.bind("s", lambda event: self._get_user_input("s"))
         self.my_view._root.bind("d", lambda event: self._get_user_input("d"))
 
-        self.schedulingSpeed = 100
+        self.schedulingSpeed = 400
         self._last_key_pressed = None
         self._last_direction = None
         self._pacman_update_event = 1

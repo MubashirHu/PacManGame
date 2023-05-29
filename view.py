@@ -8,10 +8,10 @@ class View:
         #GUI window
         self._root = Tk()
         self._canvas = None 
-        self._shape_size = 30
-        self._pellet_size = 30
+        self._shape_size = 25
+        self._pellet_size = 25
         self._wall_color = "blue"
-        self._pellet_color = "white"
+        self._pellet_color = "purple"
         self._pacman_color = "yellow"
         self._ghost_house_color = "red"
 
