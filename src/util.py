@@ -19,3 +19,9 @@ class gamePiece(Enum):
     _ghost_pinky_home = 8
     _ghost_blinky_home = 9
     _ghost_clyde_home = 10
+
+class ghostState(Enum):
+    _scatter = 0
+    _chase = 1
+    _frightened = 2
+    _eaten = 3
