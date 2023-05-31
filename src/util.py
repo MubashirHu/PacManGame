@@ -13,3 +13,9 @@ class gamePiece(Enum):
     _pellet = 3
     _ghost_house = 4
     _ghost = 5
+    _ghost_house_path = 6
+    
+    _ghost_inky_home = 7
+    _ghost_pinky_home = 8
+    _ghost_blinky_home = 9
+    _ghost_clyde_home = 10

@@ -31,6 +31,9 @@ class Controller:
                 self.my_view._draw_shape(location_and_shape[0], location_and_shape[1], location_and_shape[2])     
         
         self.my_view._draw_shape(self.my_model.Pacman._position[0], self.my_model.Pacman._position[1], gamePiece._pacman)
+
+        for i in range (len(self.my_model.Ghosts)):
+            self.my_view._draw_ghost(self.my_model.Ghosts[i]._position[0], self.my_model.Ghosts[i]._position[1], self.my_model.Ghosts[i])
        
     def _update_pacman_position(self):
         if self._pacman_update_event is not None:

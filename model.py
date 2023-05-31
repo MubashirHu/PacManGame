@@ -27,15 +27,13 @@ class Model:
 
     def _initialize(self):
         self._set_level(1)
-        
-    
+
+        #set initial positions
         self.Pacman._get_pacman_starting_position_from_current_level(self.Map, self._current_level)
 
         for i in range (len(self.Ghosts)):
-            self.Ghosts[i]._get_starting_position(self.Map, self._current_level)
-
+            self.Ghosts[i]._get_starting_position(self.Ghosts[i], self.Map, self._current_level)
         return 1
-        #add pacman
         
     def _set_level(self, level):
         if level == 1:
@@ -51,8 +49,17 @@ class Model:
         elif (self._current_level[row][column] == "0"):
             return row, column, gamePiece._pellet # path
         elif (self._current_level[row][column] == "2"):
-            return row, column, gamePiece._ghost_house # ghost house color
+            return row, column, gamePiece._ghost_house_path # ghost house color
+        elif (self._current_level[row][column] == "3"):
+            return row, column, gamePiece._ghost_inky_home # ghost house color
+        elif (self._current_level[row][column] == "4"):
+            return row, column, gamePiece._ghost_pinky_home # ghost house color
+        elif (self._current_level[row][column] == "5"):
+            return row, column, gamePiece._ghost_blinky_home # ghost house color
+        elif (self._current_level[row][column] == "6"):
+            return row, column, gamePiece._ghost_clyde_home # ghost house color
         
+                
     def _move_pacman_in_direction(self, direction):
         if direction == Direction._up :
             pass
