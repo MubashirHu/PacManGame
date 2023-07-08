@@ -14,6 +14,7 @@ class Controller:
         self.my_view._root.bind("s", lambda event: self._get_user_input("s"))
         self.my_view._root.bind("d", lambda event: self._get_user_input("d"))
 
+        self._game_started = False
         self._scheduling_speed = 400
         self._last_key_pressed = None
         self._last_direction = None
@@ -50,6 +51,7 @@ class Controller:
 
     def _get_user_input(self, direction):
         if(direction == "w"):
+            self._game_started = True
             if self._last_key_pressed == "w" and self._last_direction == Direction._up:
                 pass
             else:
@@ -58,6 +60,7 @@ class Controller:
                 self._update_pacman_position()
 
         if(direction == "a"):
+            self._game_started = True            
             if self. _last_key_pressed == "a" and self._last_direction == Direction._left:
                 pass
             else:
@@ -66,6 +69,7 @@ class Controller:
                 self._update_pacman_position()
 
         if(direction == "s"):
+            self._game_started = True
             if self._last_key_pressed == "s" and self._last_direction == Direction._down:
                 pass
             else:
@@ -74,6 +78,7 @@ class Controller:
                 self._update_pacman_position()
 
         if(direction == "d"):
+            self._game_started = True
             if self._last_key_pressed == "d" and self._last_direction == Direction._right :
                 pass
             else:
