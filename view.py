@@ -7,9 +7,10 @@ class View:
     def __init__(self):
         #GUI window
         self._root = Tk()
-        self._canvas = None 
-        self._shape_size = 25
-        self._pellet_size = 25
+        self._canvas = None
+        self._label = None
+        self._shape_size = 21
+        self._pellet_size = 21
         self._wall_color = "blue"
         self._pellet_color = "purple"
         self._pacman_color = "yellow"
@@ -18,10 +19,10 @@ class View:
 
     def _initialize(self):
         self._root.title('PacMan Game')
-        self._root.geometry('1300x1300')
+        self._root.geometry('600x1000')
 
-        self._canvas = Canvas(self._root, width=1200, height=1200, bg='black')
-        self._canvas.pack()
+        self._canvas = Canvas(self._root, width=590, height=570, bg='black')
+        self._canvas.grid(row=0, column=0)
         return 1
     
     def _draw_shape(self, y_coordinate, x_coordinate, shape):
@@ -147,3 +148,6 @@ class View:
             return 1
         else:
             return 0
+        
+
+    

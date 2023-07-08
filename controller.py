@@ -145,6 +145,7 @@ class Controller:
         
     def _updated_position_of_pacman_in_view(self):
         self.my_view._draw_shape(self.my_model.Pacman._position[0], self.my_model.Pacman._position[1], gamePiece._pacman) # draw pacman
+
         return 1
         
     def clear(self):
