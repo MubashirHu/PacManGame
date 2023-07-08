@@ -35,6 +35,18 @@ class Controller:
 
         for i in range (len(self.my_model.Ghosts)):
             self.my_view._draw_ghost(self.my_model.Ghosts[i]._position[0], self.my_model.Ghosts[i]._position[1], self.my_model.Ghosts[i])
+
+    def _update_ghosts_position(self):
+        pass
+
+    def _update_position_of_ghosts_in_model(self):
+        if self._game_started:
+            pass
+        else:
+            pass
+
+    def _update_position_of_ghosts_in_view(self):
+        pass
        
     def _update_pacman_position(self):
         if self._pacman_update_event is not None:

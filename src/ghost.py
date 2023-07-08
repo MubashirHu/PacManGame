@@ -8,7 +8,7 @@ class Ghost:
         self._scatter_target = []
         self._chase_target = []
         self._direction = None
-        self._mode = None
+        self._state = None
         self._speed = None
         self._status = None
         self._vulnerability_timer = None
@@ -23,8 +23,8 @@ class Ghost:
     def _set_color(self, color):
         self._color = color
 
-    def _set_mode(self, mode):
-        self._mode = mode
+    def _set_state(self, state):
+        self._state = state
 
     def _set_speed(self, speed):
         self._speed = speed
