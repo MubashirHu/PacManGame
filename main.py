@@ -8,6 +8,7 @@ def main():
     myController = Controller()
     myController._initialize_game()
     myController._display_initial_positions()
+    myController._set_initial_states()
 
     myController.my_view._root.mainloop()
     

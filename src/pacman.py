@@ -6,7 +6,7 @@ class PacMan:
         self._lives = 0
         self._current_score = 0
         self._speed = 0
-        self._status = 0
+        self._state = 0
         self._power_up_timer = 0
         self._power_up_duration = 0
         self._power_up_score = 0
@@ -27,8 +27,8 @@ class PacMan:
     def _set_speed(self, speed):
         self._speed = speed
 
-    def _set_status(self, status):
-        self._status = status
+    def _set_state(self, state):
+        self._state = state
         
     def _set_power_up_timer(self, timer):
         self._power_up_timer = timer

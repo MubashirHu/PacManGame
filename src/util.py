@@ -25,3 +25,9 @@ class ghostState(Enum):
     _chase = 1
     _frightened = 2
     _eaten = 3
+
+class pacmanState(Enum):
+    _no_buff = 0
+    _has_power_buff = 1
+    _has_speed_buff = 2
+    
