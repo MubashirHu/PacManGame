@@ -17,11 +17,11 @@ class Model:
         self.GhostInky = Ghost("Inky", "cyan")
         self.GhostClyde = Ghost("Clyde","orange")
 
-        self.Ghosts.append(self.GhostBlinky)
         self.Ghosts.append(self.GhostPinky)
-        self.Ghosts.append(self.GhostInky)
+        self.Ghosts.append(self.GhostBlinky)
         self.Ghosts.append(self.GhostClyde)
-
+        self.Ghosts.append(self.GhostInky)
+        
         #data
         self._current_level = []
 
@@ -51,13 +51,13 @@ class Model:
         elif (self._current_level[row][column] == "2"):
             return row, column, gamePiece._ghost_house_path # ghost house color
         elif (self._current_level[row][column] == "3"):
-            return row, column, gamePiece._ghost_inky_home # ghost house color
-        elif (self._current_level[row][column] == "4"):
             return row, column, gamePiece._ghost_pinky_home # ghost house color
-        elif (self._current_level[row][column] == "5"):
+        elif (self._current_level[row][column] == "4"):
             return row, column, gamePiece._ghost_blinky_home # ghost house color
-        elif (self._current_level[row][column] == "6"):
+        elif (self._current_level[row][column] == "5"):
             return row, column, gamePiece._ghost_clyde_home # ghost house color
+        elif (self._current_level[row][column] == "6"):
+            return row, column, gamePiece._ghost_inky_home # ghost house color
         
                 
     def _move_pacman_in_direction(self, direction):

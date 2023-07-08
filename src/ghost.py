@@ -43,25 +43,25 @@ class Ghost:
 
     #getters
     def _get_starting_position(self, ghost_obj, map_obj, _current_level ):
-        if ghost_obj._name == "Blinky":  
+        if ghost_obj._name == "Pinky":  
             for i in range(map_obj._rows):
                 for j in range(map_obj._columns):
                     if _current_level[i][j] == "3":
                         self._position.append(i)
                         self._position.append(j)
-        elif ghost_obj._name == "Pinky":  
+        elif ghost_obj._name == "Blinky":  
             for i in range(map_obj._rows):
                 for j in range(map_obj._columns):
                     if _current_level[i][j] == "4":
                         self._position.append(i)
                         self._position.append(j)
-        if ghost_obj._name == "Inky":  
+        if ghost_obj._name == "Clyde":  
             for i in range(map_obj._rows):
                 for j in range(map_obj._columns):
                     if _current_level[i][j] == "5":
                         self._position.append(i)
                         self._position.append(j)
-        if ghost_obj._name == "Clyde":  
+        if ghost_obj._name == "Inky":  
             for i in range(map_obj._rows):
                 for j in range(map_obj._columns):
                     if _current_level[i][j] == "6":
@@ -91,4 +91,3 @@ class Ghost:
     
     def _get_vulnerability_timer(self):
         return self._vulnerability_timer
-
