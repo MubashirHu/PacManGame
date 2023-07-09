@@ -43,6 +43,12 @@ class Controller:
             self.my_model.Ghosts[i]._set_state(ghostState._scatter)
 
         self.my_model._set_scatter_target_in_model()
+
+    def _display_positions_of_pieces_in_view_text(self):
+        self.my_view._display_pacman_position_text(self.my_model.Pacman._position[0],self.my_model.Pacman._position[1], self.my_model.Pacman._state)
+        
+        for i in range(len(self.my_model.Ghosts)):
+            self.my_view._display_ghost_position_text(self.my_model.Ghosts[i])
     
     def _update_ghosts_position(self):
         pass
@@ -63,6 +69,7 @@ class Controller:
         if self.my_model.Pacman._movement_direction != Direction._idle:
             if self._updated_position_of_pacman_in_model():
                 self._updated_position_of_pacman_in_view()
+                self._display_positions_of_pieces_in_view_text()
             else:
                 self.my_model.Pacman._movement_direction = self._last_direction
 
@@ -147,11 +154,6 @@ class Controller:
         
     def _updated_position_of_pacman_in_view(self):
         self.my_view._draw_shape(self.my_model.Pacman._position[0], self.my_model.Pacman._position[1], gamePiece._pacman) # draw pacman
-        
-        self.my_view._display_pacman_position_text(self.my_model.Pacman._position[0],self.my_model.Pacman._position[1], self.my_model.Pacman._state)
-        
-        for i in range(len(self.my_model.Ghosts)):
-            self.my_view._display_ghost_position_text(self.my_model.Ghosts[i])
 
         return 1
         
