@@ -59,18 +59,6 @@ class Model:
         elif (self._current_level[row][column] == "6"):
             return row, column, gamePiece._ghost_inky_home # ghost house color
         
-                
-    def _move_pacman_in_direction(self, direction):
-        if direction == Direction._up :
-            pass
-        elif direction == Direction._down:
-            pass
-        elif direction == Direction._left:
-            pass
-        elif direction == Direction._right:
-            pass
-        elif direction == Direction._idle:
-            pass
 
     def _is_move_valid(self, direction):
         if direction == Direction._up:
@@ -142,7 +130,7 @@ class Model:
 
             self.Ghosts[i]._set_scatter_target(r,c)
 
-    def _move_ghost_towards_scatter_target(self, obj):
+    def _move_ghost(self, obj):
         pass
 
     def _update_score(self):
