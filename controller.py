@@ -35,8 +35,8 @@ class Controller:
 
         for i in range (len(self.my_model.Ghosts)):
             self.my_view._draw_ghost(self.my_model.Ghosts[i]._position[0], self.my_model.Ghosts[i]._position[1], self.my_model.Ghosts[i])
-
-    def _set_initial_states(self):
+            
+    def _set_initial_states_and_ghost_targets(self):
         self.my_model.Pacman._set_state(pacmanState._no_buff)
 
         for i in range (len(self.my_model.Ghosts)):

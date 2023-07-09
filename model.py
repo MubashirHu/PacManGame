@@ -124,7 +124,24 @@ class Model:
         else:
             print("Not part of the controls")
             return 0
-             
+        
+    def _set_scatter_target(self):
+        for i in range(len(self.Ghosts)):
+            if self.Ghosts[i]._name == "Pinky":
+                r = 0
+                c = 0
+            elif self.Ghosts[i]._name == "Blinky":
+                r = 0
+                c = 27
+            elif self.Ghosts[i]._name == "Clyde":
+                r = 26
+                c = 0
+            elif self.Ghosts[i]._name == "Inky":
+                r = 26
+                c = 27
+
+            self.Ghosts[i]._set_scatter_target(r,c)
+
     def _move_ghost(self, obj):
         pass
 
