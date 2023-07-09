@@ -145,6 +145,11 @@ class Controller:
         
     def _updated_position_of_pacman_in_view(self):
         self.my_view._draw_shape(self.my_model.Pacman._position[0], self.my_model.Pacman._position[1], gamePiece._pacman) # draw pacman
+        
+        self.my_view._display_pacman_position_text(self.my_model.Pacman._position[0],self.my_model.Pacman._position[1], self.my_model.Pacman._state)
+        
+        for i in range(len(self.my_model.Ghosts)):
+            self.my_view._display_ghost_position_text(self.my_model.Ghosts[i])
 
         return 1
         

@@ -19,10 +19,10 @@ class View:
 
     def _initialize(self):
         self._root.title('PacMan Game')
-        self._root.geometry('600x1000')
+        self._root.geometry('1200x1000')
 
         self._canvas = Canvas(self._root, width=590, height=570, bg='black')
-        self._canvas.grid(row=0, column=0)
+        self._canvas.grid(row=0, column=3)
         return 1
     
     def _draw_shape(self, y_coordinate, x_coordinate, shape):
@@ -149,5 +149,77 @@ class View:
         else:
             return 0
         
+    def _display_pacman_position_text(self, pacman_row_position, pacman_column_position, pacman_state):
 
+        #title
+        self._label = Label(self._root, text = "Positions:",font=('Times', 24), bg= "white", fg = "black")
+        self._label.grid(row=1, column=0)
+
+        self._label = Label(self._root, text = "ROW",font=('Times', 24), bg= "white", fg = "black")
+        self._label.grid(row=1, column=1)
+
+        self._label = Label(self._root, text = "COLUMN",font=('Times', 24), bg= "white", fg = "black")
+        self._label.grid(row=1, column=2)
+
+        self._label = Label(self._root, text = "STATE",font=('Times', 24), bg= "white", fg = "black")
+        self._label.grid(row=1, column=3)
+
+        #----pacman
+        self._label = Label(self._root, text = "Pac-man",font=('Times', 24), bg= "white", fg = "gold")
+        self._label.grid(row=2, column=0)
+
+        self._label = Label(self._root, text = pacman_row_position,font=('Times', 24), bg= "white", fg = "gold")
+        self._label.grid(row=2, column=1)
+
+        self._label = Label(self._root, text = pacman_column_position,font=('Times', 24), bg= "white", fg = "gold")
+        self._label.grid(row=2, column=2)
+
+        self._label = Label(self._root, text = pacman_state ,font=('Times', 24), bg= "white", fg = "gold")
+        self._label.grid(row=2, column=3)
+
+    def _display_ghost_position_text(self, ghost_obj):
+
+        #local vars
+        ghost_state = ghost_obj._state
+        row_position = ghost_obj._position[0]
+        column_position = ghost_obj._position[1]
+        
+        #----ghosts
+        if ghost_obj._name == "Pinky":
+            ghost_name = "Pinky"
+            r = 3
+            ghost_color = "pink"
+            state = ghost_obj._state
+
+        elif ghost_obj._name == "Blinky":
+            ghost_name = "Blinky"
+            r = 4
+            ghost_color = "red"
+            state = ghost_obj._state
+
+        elif ghost_obj._name == "Clyde":
+            ghost_name = "Clyde"
+            r = 5
+            ghost_color = "orange"
+            state = ghost_obj._state
+
+        elif ghost_obj._name == "Inky":
+            ghost_name = "Inky"
+            r = 6
+            ghost_color = "cyan"
+            state = ghost_obj._state
+            
+        #ghost
+        self._label = Label(self._root, text = ghost_name,font=('Times', 24), bg= "white", fg = ghost_color)
+        self._label.grid(row= r, column=0)
+
+        self._label = Label(self._root, text = row_position,font=('Times', 24), bg= "white", fg = ghost_color)
+        self._label.grid(row=r, column=1)
+
+        self._label = Label(self._root, text = column_position,font=('Times', 24), bg= "white", fg = ghost_color)
+        self._label.grid(row=r, column=2)
+
+        self._label = Label(self._root, text = ghost_state ,font=('Times', 24), bg= "white", fg = ghost_color)
+        self._label.grid(row=r, column=3)
+             
     
