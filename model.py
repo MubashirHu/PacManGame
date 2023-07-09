@@ -59,7 +59,6 @@ class Model:
         elif (self._current_level[row][column] == "6"):
             return row, column, gamePiece._ghost_inky_home # ghost house color
         
-
     def _is_move_valid(self, direction):
         if direction == Direction._up:
             row = self.Pacman._position[0]-1
@@ -113,7 +112,7 @@ class Model:
             print("Not part of the controls")
             return 0
         
-    def _set_scatter_target(self):
+    def _set_scatter_target_in_model(self):
         for i in range(len(self.Ghosts)):
             if self.Ghosts[i]._name == "Pinky":
                 r = 0
