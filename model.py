@@ -142,7 +142,7 @@ class Model:
 
             self.Ghosts[i]._set_scatter_target(r,c)
 
-    def _move_ghost(self, obj):
+    def _move_ghost_towards_scatter_target(self, obj):
         pass
 
     def _update_score(self):

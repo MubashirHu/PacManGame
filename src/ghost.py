@@ -15,14 +15,12 @@ class Ghost:
 
     #setters
     def _set_position(self, row, column):
-        pass
+        self._position.append(row)
+        self._position.append(column)
 
     def _set_direction(self, direction):
         self._direction = direction
-
-    def _set_color(self, color):
-        self._color = color
-
+        
     def _set_state(self, state):
         self._state = state
 
