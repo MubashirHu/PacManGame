@@ -3,6 +3,7 @@ from src.ghost import *
 from src.pacman import *
 from src.maze import *
 from src.util import *
+import math
 
 class Model:
     def __init__(self):
@@ -129,7 +130,12 @@ class Model:
 
             self.Ghosts[i]._set_scatter_target(r,c)
 
-    def _move_ghost_towards_scatter_target(self, ghost_obj):
+    def _distance_between_positions(self,x1, y1, x2, y2):
+        distance = math.dist([x1, y1], [x2, y2])
+        print(distance)
+        return distance
+
+    def _move_ghost_towards_target(self, ghost_obj, pacman_obj):
         pass
 
     def _update_score(self):
