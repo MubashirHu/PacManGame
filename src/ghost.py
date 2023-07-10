@@ -31,6 +31,7 @@ class Ghost:
         self._status = status
 
     def _set_scatter_target(self, row, column):
+        self._scatter_target.clear()
         self._scatter_target.append(row)
         self._scatter_target.append(column)
 
