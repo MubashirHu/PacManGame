@@ -10,9 +10,9 @@ class View:
         self._canvas = None
         self._label = None
         self._shape_size = 21
-        self._pellet_size = 21
+        self._path_size = 21
         self._wall_color = "blue"
-        self._pellet_color = "purple"
+        self._path_color = "purple"
         self._pacman_color = "yellow"
         self._ghost_house_path_color = "green"
         self._ghost_house_base_color = "white"
@@ -26,8 +26,8 @@ class View:
         return 1
     
     def _draw_shape(self, y_coordinate, x_coordinate, shape):
-        if (shape == gamePiece._pellet):
-            if self.add_shape(self, x_coordinate, y_coordinate, self._pellet_size, gamePiece._pellet, self._pellet_color):
+        if (shape == gamePiece._path):
+            if self.add_shape(self, x_coordinate, y_coordinate, self._path_size, gamePiece._path, self._path_color):
                 return 1
             else:
                 return 0
@@ -40,7 +40,7 @@ class View:
             
         elif(shape == gamePiece._pacman):
             if self._draw_pacman_in_position(x_coordinate, y_coordinate):
-                if self._eat_pellet_in_position(x_coordinate, y_coordinate):
+                if self._eat_path_in_position(x_coordinate, y_coordinate):
                     return 1
                 else:
                     return 0
@@ -99,7 +99,7 @@ class View:
         else:
             return 0
     
-    def _eat_pellet_in_position(self, x_coordinate, y_coordinate):
+    def _eat_path_in_position(self, x_coordinate, y_coordinate):
         pellet_id = self._canvas.find_withtag(f"{x_coordinate}_{y_coordinate}")
         if pellet_id:
             self._canvas.delete(pellet_id)
@@ -116,7 +116,7 @@ class View:
             self._canvas.create_oval(x0, y0, x1, y1, tags= gamePiece._pacman, fill=color)
             return 1
 
-        if gamepiece == gamePiece._pellet:
+        if gamepiece == gamePiece._path:
             x0 = i * size
             y0 = j * size
             x1 = x0 + size 
