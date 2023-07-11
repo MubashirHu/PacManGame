@@ -10,7 +10,7 @@ class gamePiece(Enum):
     _none = 0
     _pacman = 1
     _wall = 2
-    _pellet = 3
+    _path = 3
     _ghost_house = 4
     _ghost = 5
     _ghost_house_path = 6
