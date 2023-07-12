@@ -1,15 +1,16 @@
 from src.util import *
 class Ghost:
-    def __init__(self, name, color):
+    def __init__(self, name, color, direction=Direction._up):
         self._name = name
         self._color = color
+        self._direction = None
 
         self.row = 0
         self.col = 0
         self._ghost_house_position = []
         self._scatter_target = []
         self._chase_target = []
-        self._direction = None
+
         self._state = ghostState._scatter
         self._speed = None
         self._status = None
