@@ -27,23 +27,21 @@ class Model:
         self._current_level = []
 
     def _initialize(self):
+
+        #initialize maze
         self._current_level = self.Map._get_level(1)
 
-        #set initial positions
-        self.Pacman._get_pacman_starting_position_from_current_level(self.Map, self._current_level)
+        #initialize pacman
+        self.Pacman._get_starting_position(self.Map, self._current_level)
 
+        #initialize ghosts
         for i in range (len(self.Ghosts)):
             self.Ghosts[i]._get_starting_position(self.Ghosts[i], self.Map, self._current_level)
+            self.Ghosts[i]._set_scatter_target(self.Ghosts[i]._name)
 
-        self.Pacman._set_state(pacmanState._no_buff)
-
-        for i in range (len(self.Ghosts)):
-            self.Ghosts[i]._set_state(ghostState._scatter)
-
-        self._set_scatter_target_in_model()
         return 1
 
-    def _check_gamepiece(self, obj = 0, r=0, c=0, direction = Direction._idle):
+    def _scan_direction(self, obj = 0, r=0, c=0, direction = Direction._idle):
 
         if direction == Direction._up:
             r = obj.row-1
@@ -77,28 +75,28 @@ class Model:
         
     def _is_move_valid_for_pacman(self, direction):
         if direction == Direction._up:
-            tmp = self._check_gamepiece(self.Pacman, self.Pacman.row, self.Pacman.col, direction)
+            tmp = self._scan_direction(self.Pacman, self.Pacman.row, self.Pacman.col, direction)
             if tmp[2] == gamePiece._path:
                 return 1
             else:
                 return 0
             
         elif direction == Direction._down:
-            tmp = self._check_gamepiece(self.Pacman, self.Pacman.row, self.Pacman.col, direction)
+            tmp = self._scan_direction(self.Pacman, self.Pacman.row, self.Pacman.col, direction)
             if tmp[2] == gamePiece._path:
                 return 1
             else:
                 return 0
             
         elif direction == Direction._left:
-            tmp = self._check_gamepiece(self.Pacman, self.Pacman.row, self.Pacman.col, direction)
+            tmp = self._scan_direction(self.Pacman, self.Pacman.row, self.Pacman.col, direction)
             if tmp[2] == gamePiece._path:
                 return 1
             else:
                 return 0
             
         elif direction == Direction._right:
-            tmp = self._check_gamepiece(self.Pacman, self.Pacman.row, self.Pacman.col, direction)
+            tmp = self._scan_direction(self.Pacman, self.Pacman.row, self.Pacman.col, direction)
             if tmp[2] == gamePiece._path:
                 return 1
             else:
@@ -143,24 +141,7 @@ class Model:
         elif (self.Pacman._movement_direction == Direction._idle):
             return 0
 
-
 ###################################GHOST#######################################
-    def _set_scatter_target_in_model(self):
-        for i in range(len(self.Ghosts)):
-            if self.Ghosts[i]._name == "Pinky":
-                r = 0
-                c = 0
-            elif self.Ghosts[i]._name == "Blinky":
-                r = 0
-                c = 27
-            elif self.Ghosts[i]._name == "Clyde":
-                r = 26
-                c = 0
-            elif self.Ghosts[i]._name == "Inky":
-                r = 26
-                c = 27
-
-            self.Ghosts[i]._set_scatter_target(r,c)
 
     def _distance_between_positions(self,x1, y1, x2, y2):
         #x - row
@@ -178,8 +159,8 @@ class Model:
 
                 if self.Ghosts[i]._direction == Direction._up:
                     #cannot be down, check if LEFT side and RIGHT side for a wall
-                    leftside = self._check_gamepiece[self.Ghosts[i]._position[0],self.Ghosts[i]._position[1] - 1 ] 
-                    rightside = self._check_gamepiece[self.Ghosts[i]._position[0],self.Ghosts[i]._position[1] + 1 ] 
+                    leftside = self._scan_direction[self.Ghosts[i]._position[0],self.Ghosts[i]._position[1] - 1 ] 
+                    rightside = self._scan_direction[self.Ghosts[i]._position[0],self.Ghosts[i]._position[1] + 1 ] 
 
                     #compare which move to make 
                     if leftside != gamePiece._path:
@@ -206,8 +187,8 @@ class Model:
 
                 if self.Ghosts[i]._direction == Direction._down:
                     #cannot be UP, check if LEFT side and RIGHT side for a wall
-                    leftside = self._check_gamepiece[self.Ghosts[i]._position[0],self.Ghosts[i]._position[1] - 1 ] 
-                    rightside = self._check_gamepiece[self.Ghosts[i]._position[0],self.Ghosts[i]._position[1] + 1 ] 
+                    leftside = self._scan_direction[self.Ghosts[i]._position[0],self.Ghosts[i]._position[1] - 1 ] 
+                    rightside = self._scan_direction[self.Ghosts[i]._position[0],self.Ghosts[i]._position[1] + 1 ] 
 
                     #compare which move to make 
                     if leftside != gamePiece._path:
@@ -234,8 +215,8 @@ class Model:
 
                 if self.Ghosts[i]._direction == Direction._left:
                     #cannot be right, check if UP side and DOWN side for a wall
-                    upside = self._check_gamepiece[self.Ghosts[i]._position[0]-1,self.Ghosts[i]._position[1]] 
-                    downside = self._check_gamepiece[self.Ghosts[i]._position[0]+1,self.Ghosts[i]._position[1]] 
+                    upside = self._scan_direction[self.Ghosts[i]._position[0]-1,self.Ghosts[i]._position[1]] 
+                    downside = self._scan_direction[self.Ghosts[i]._position[0]+1,self.Ghosts[i]._position[1]] 
 
                     #compare which move to make 
                     if upside != gamePiece._path:
@@ -262,8 +243,8 @@ class Model:
 
                 if self.Ghosts[i]._direction == Direction._right:
                     #cannot be left, check if UP side and DOWN side for a wall
-                    upside = self._check_gamepiece[self.Ghosts[i]._position[0]-1,self.Ghosts[i]._position[1]] 
-                    downside = self._check_gamepiece[self.Ghosts[i]._position[0]+1,self.Ghosts[i]._position[1]] 
+                    upside = self._scan_direction[self.Ghosts[i]._position[0]-1,self.Ghosts[i]._position[1]] 
+                    downside = self._scan_direction[self.Ghosts[i]._position[0]+1,self.Ghosts[i]._position[1]] 
 
                     #compare which move to make 
                     if upside != gamePiece._path:
@@ -296,8 +277,8 @@ class Model:
 
                 if self.Ghosts[i]._direction == Direction._up:
                     #cannot be down, check if LEFT side and RIGHT side for a wall
-                    leftside = self._check_gamepiece[self.Ghosts[i]._position[0],self.Ghosts[i]._position[1] - 1 ] 
-                    rightside = self._check_gamepiece[self.Ghosts[i]._position[0],self.Ghosts[i]._position[1] + 1 ] 
+                    leftside = self._scan_direction[self.Ghosts[i]._position[0],self.Ghosts[i]._position[1] - 1 ] 
+                    rightside = self._scan_direction[self.Ghosts[i]._position[0],self.Ghosts[i]._position[1] + 1 ] 
 
                     #compare which move to make 
                     if leftside != gamePiece._path:
@@ -324,8 +305,8 @@ class Model:
 
                 if self.Ghosts[i]._direction == Direction._down:
                     #cannot be UP, check if LEFT side and RIGHT side for a wall
-                    leftside = self._check_gamepiece[self.Ghosts[i]._position[0],self.Ghosts[i]._position[1] - 1 ] 
-                    rightside = self._check_gamepiece[self.Ghosts[i]._position[0],self.Ghosts[i]._position[1] + 1 ] 
+                    leftside = self._scan_direction[self.Ghosts[i]._position[0],self.Ghosts[i]._position[1] - 1 ] 
+                    rightside = self._scan_direction[self.Ghosts[i]._position[0],self.Ghosts[i]._position[1] + 1 ] 
 
                     #compare which move to make 
                     if leftside != gamePiece._path:
@@ -352,8 +333,8 @@ class Model:
 
                 if self.Ghosts[i]._direction == Direction._left:
                     #cannot be right, check if UP side and DOWN side for a wall
-                    upside = self._check_gamepiece[self.Ghosts[i]._position[0]-1,self.Ghosts[i]._position[1]] 
-                    downside = self._check_gamepiece[self.Ghosts[i]._position[0]+1,self.Ghosts[i]._position[1]] 
+                    upside = self._scan_direction[self.Ghosts[i]._position[0]-1,self.Ghosts[i]._position[1]] 
+                    downside = self._scan_direction[self.Ghosts[i]._position[0]+1,self.Ghosts[i]._position[1]] 
 
                     #compare which move to make 
                     if upside != gamePiece._path:
@@ -380,8 +361,8 @@ class Model:
 
                 if self.Ghosts[i]._direction == Direction._right:
                     #cannot be left, check if UP side and DOWN side for a wall
-                    upside = self._check_gamepiece[self.Ghosts[i]._position[0]-1,self.Ghosts[i]._position[1]] 
-                    downside = self._check_gamepiece[self.Ghosts[i]._position[0]+1,self.Ghosts[i]._position[1]] 
+                    upside = self._scan_direction[self.Ghosts[i]._position[0]-1,self.Ghosts[i]._position[1]] 
+                    downside = self._scan_direction[self.Ghosts[i]._position[0]+1,self.Ghosts[i]._position[1]] 
 
                     #compare which move to make 
                     if upside != gamePiece._path:
