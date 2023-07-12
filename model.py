@@ -75,29 +75,29 @@ class Model:
         
     def _is_move_valid_for_pacman(self, direction):
         if direction == Direction._up:
-            tmp = self._scan_direction(self.Pacman, self.Pacman.row, self.Pacman.col, direction)
-            if tmp[2] == gamePiece._path:
+            scanned_obj = self._scan_direction(self.Pacman, self.Pacman.row, self.Pacman.col, direction)
+            if scanned_obj[2] == gamePiece._path:
                 return 1
             else:
                 return 0
             
         elif direction == Direction._down:
-            tmp = self._scan_direction(self.Pacman, self.Pacman.row, self.Pacman.col, direction)
-            if tmp[2] == gamePiece._path:
+            scanned_obj = self._scan_direction(self.Pacman, self.Pacman.row, self.Pacman.col, direction)
+            if scanned_obj[2] == gamePiece._path:
                 return 1
             else:
                 return 0
             
         elif direction == Direction._left:
-            tmp = self._scan_direction(self.Pacman, self.Pacman.row, self.Pacman.col, direction)
-            if tmp[2] == gamePiece._path:
+            scanned_obj = self._scan_direction(self.Pacman, self.Pacman.row, self.Pacman.col, direction)
+            if scanned_obj[2] == gamePiece._path:
                 return 1
             else:
                 return 0
             
         elif direction == Direction._right:
-            tmp = self._scan_direction(self.Pacman, self.Pacman.row, self.Pacman.col, direction)
-            if tmp[2] == gamePiece._path:
+            scanned_obj = self._scan_direction(self.Pacman, self.Pacman.row, self.Pacman.col, direction)
+            if scanned_obj[2] == gamePiece._path:
                 return 1
             else:
                 return 0  
