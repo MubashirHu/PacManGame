@@ -408,12 +408,3 @@ class Model:
             
     def _move_ghost(self, ghost_obj, direction):
         pass
-
-    def _game_over(self):
-        pass
-
-    def _restart(self):
-        pass
-
-    def _quit(self):
-        pass
