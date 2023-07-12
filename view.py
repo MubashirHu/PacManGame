@@ -189,25 +189,21 @@ class View:
             ghost_name = "Pinky"
             r = 3
             ghost_color = "pink"
-            state = ghost_obj._state
 
         elif ghost_obj._name == "Blinky":
             ghost_name = "Blinky"
             r = 4
             ghost_color = "red"
-            state = ghost_obj._state
 
         elif ghost_obj._name == "Clyde":
             ghost_name = "Clyde"
             r = 5
             ghost_color = "orange"
-            state = ghost_obj._state
 
         elif ghost_obj._name == "Inky":
             ghost_name = "Inky"
             r = 6
             ghost_color = "cyan"
-            state = ghost_obj._state
             
         #ghost
         self._label = Label(self._root, text = ghost_name,font=('Times', 24), bg= "white", fg = ghost_color)
