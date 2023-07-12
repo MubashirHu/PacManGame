@@ -223,7 +223,7 @@ class View:
         self._label.grid(row=r, column=3)
 
 
-    def _updated_position_of_pacman(self, row, col):
+    def _update_position_of_pacman(self, row, col):
         self._draw_shape(row, col, gamePiece._pacman) # draw pacman
 
         return 1
