@@ -228,3 +228,21 @@ class View:
 
         return 1
     
+    def _update_position_of_ghost(self, ghost_obj):
+        r = ghost_obj.row
+        c = ghost_obj.col
+        name = ghost_obj._name
+
+        if name == ghost._blinky:
+            self._draw_shape(r,c, gamePiece._ghost_blinky_home)
+        elif name == ghost._pinky:
+            self._draw_ghost(r,c, gamePiece._ghost_pinky_home)
+        elif name == ghost._inky:
+            self._draw_ghost(r,c, gamePiece._ghost_inky_home)
+        elif name == ghost._clyde:
+            self._draw_ghost(r,c, gamePiece._ghost_clyde_home)
+        else:
+            return 0
+
+        return 1
+    
