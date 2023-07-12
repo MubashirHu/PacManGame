@@ -27,7 +27,7 @@ class Model:
         self._current_level = []
 
     def _initialize(self):
-        self._set_level(1)
+        self._current_level = self.Map._get_level(1)
 
         #set initial positions
         self.Pacman._get_pacman_starting_position_from_current_level(self.Map, self._current_level)
@@ -42,16 +42,8 @@ class Model:
 
         self._set_scatter_target_in_model()
         return 1
-        
-    def _set_level(self, level):
-        if level == 1:
-            self._current_level = self.Map._get_level(1)
-        elif level == 2:
-            self._current_level = self.Map._get_level(2)
-        elif level == 3:
-            self._current_level = self.Map._get_level(3)
 
-    def _check_for_walls_and_path(self, row, column):
+    def _check_gamepiece(self, row, column):
         if(self._current_level[row][column] == "1"):
             return row, column, gamePiece._wall # wall
         elif (self._current_level[row][column] == "0"):
@@ -119,269 +111,8 @@ class Model:
         else:
             print("Not part of the controls")
             return 0
-        
-    def _set_scatter_target_in_model(self):
-        for i in range(len(self.Ghosts)):
-            if self.Ghosts[i]._name == "Pinky":
-                r = 0
-                c = 0
-            elif self.Ghosts[i]._name == "Blinky":
-                r = 0
-                c = 27
-            elif self.Ghosts[i]._name == "Clyde":
-                r = 26
-                c = 0
-            elif self.Ghosts[i]._name == "Inky":
-                r = 26
-                c = 27
 
-            self.Ghosts[i]._set_scatter_target(r,c)
-
-    def _distance_between_positions(self,x1, y1, x2, y2):
-        #x - row
-        #y - column
-        distance = math.dist([x1, y1], [x2, y2])
-        print(distance)
-        return distance
-
-    def _determine_direction_to_move_ghost(self, mode):
-        
-        if mode == 0: #scatter state
-            for i in range(len(self.Ghosts)):
-                #check which move is the right move to make, up, down, left, right
-                #check the 4 directions, if wall, or backwards remove the options of moving in that direction
-
-                if self.Ghosts[i]._direction == Direction._up:
-                    #cannot be down, check if LEFT side and RIGHT side for a wall
-                    leftside = self._check_for_walls_and_path[self.Ghosts[i]._position[0],self.Ghosts[i]._position[1] - 1 ] 
-                    rightside = self._check_for_walls_and_path[self.Ghosts[i]._position[0],self.Ghosts[i]._position[1] + 1 ] 
-
-                    #compare which move to make 
-                    if leftside != gamePiece._path:
-                        if rightside != gamePiece._path:
-                            self._move_ghost(self.Ghosts[i], Direction._up)
-                        else:
-                            self._move_ghost(self.Ghosts[i], Direction._right)
-                    else:
-                        if rightside != gamePiece._path:
-                            self._move_ghost(self.Ghosts[i], Direction._left)
-                        else:
-                            #check the distance between the two moves, left and right
-                            leftdistance = self._distance_between_positions(self.Ghosts[i]._position[0], self.Ghosts[i]._position[1]-1, self.Ghosts[i]._scatter_target[0], self.ghosts[i]._scatter_target[1])
-                            rightdistance = self._distance_between_positions(self.Ghosts[i]._position[0], self.Ghosts[i]._position[1]+1, self.Ghosts[i]._scatter_target[0], self.ghosts[i]._scatter_target[1])
-
-                            if leftdistance < rightdistance:
-                                self._move_ghost(self.Ghosts[i], Direction._left)
-                            elif rightdistance < leftdistance:
-                                self._move_ghost(self.Ghosts[i], Direction._right)
-                            elif leftdistance == rightdistance : 
-                                self._move_ghost (self.Ghosts[i], Direction._left)
-                            else:
-                                pass
-
-                if self.Ghosts[i]._direction == Direction._down:
-                    #cannot be UP, check if LEFT side and RIGHT side for a wall
-                    leftside = self._check_for_walls_and_path[self.Ghosts[i]._position[0],self.Ghosts[i]._position[1] - 1 ] 
-                    rightside = self._check_for_walls_and_path[self.Ghosts[i]._position[0],self.Ghosts[i]._position[1] + 1 ] 
-
-                    #compare which move to make 
-                    if leftside != gamePiece._path:
-                        if rightside != gamePiece._path:
-                            self._move_ghost(self.Ghosts[i], Direction._down)
-                        else:
-                            self._move_ghost(self.Ghosts[i], Direction._right)
-                    else:
-                        if rightside != gamePiece._path:
-                            self._move_ghost(self.Ghosts[i], Direction._left)
-                        else:
-                            #check the distance between the two moves, LEFT and RIGHT
-                            leftdistance = self._distance_between_positions(self.Ghosts[i]._position[0], self.Ghosts[i]._position[1]-1, self.Ghosts[i]._scatter_target[0], self.ghosts[i]._scatter_target[1])
-                            rightdistance = self._distance_between_positions(self.Ghosts[i]._position[0], self.Ghosts[i]._position[1]+1, self.Ghosts[i]._scatter_target[0], self.ghosts[i]._scatter_target[1])
-
-                            if leftdistance < rightdistance:
-                                self._move_ghost(self.Ghosts[i], Direction._left)
-                            elif rightdistance < leftdistance:
-                                self._move_ghost(self.Ghosts[i], Direction._right)
-                            elif leftdistance == rightdistance : 
-                                self._move_ghost (self.Ghosts[i], Direction._left)
-                            else:
-                                pass
-
-                if self.Ghosts[i]._direction == Direction._left:
-                    #cannot be right, check if UP side and DOWN side for a wall
-                    upside = self._check_for_walls_and_path[self.Ghosts[i]._position[0]-1,self.Ghosts[i]._position[1]] 
-                    downside = self._check_for_walls_and_path[self.Ghosts[i]._position[0]+1,self.Ghosts[i]._position[1]] 
-
-                    #compare which move to make 
-                    if upside != gamePiece._path:
-                        if downside != gamePiece._path:
-                            self._move_ghost(self.Ghosts[i], Direction._left)
-                        else:
-                            self._move_ghost(self.Ghosts[i], Direction._down)
-                    else:
-                        if downside != gamePiece._path:
-                            self._move_ghost(self.Ghosts[i], Direction._up)
-                        else:
-                            #check the distance between the two moves, left and right
-                            updistance = self._distance_between_positions(self.Ghosts[i]._position[0]-1, self.Ghosts[i]._position[1], self.Ghosts[i]._scatter_target[0], self.ghosts[i]._scatter_target[1])
-                            downdistance = self._distance_between_positions(self.Ghosts[i]._position[0]+1, self.Ghosts[i]._position[1], self.Ghosts[i]._scatter_target[0], self.ghosts[i]._scatter_target[1])
-
-                            if updistance < downdistance:
-                                self._move_ghost(self.Ghosts[i], Direction._up)
-                            elif downdistance < updistance:
-                                self._move_ghost(self.Ghosts[i], Direction._down)
-                            elif updistance == downdistance : 
-                                self._move_ghost (self.Ghosts[i], Direction._up)
-                            else:
-                                pass
-
-                if self.Ghosts[i]._direction == Direction._right:
-                    #cannot be left, check if UP side and DOWN side for a wall
-                    upside = self._check_for_walls_and_path[self.Ghosts[i]._position[0]-1,self.Ghosts[i]._position[1]] 
-                    downside = self._check_for_walls_and_path[self.Ghosts[i]._position[0]+1,self.Ghosts[i]._position[1]] 
-
-                    #compare which move to make 
-                    if upside != gamePiece._path:
-                        if downside != gamePiece._path:
-                            self._move_ghost(self.Ghosts[i], Direction._right)
-                        else:
-                            self._move_ghost(self.Ghosts[i], Direction._down)
-                    else:
-                        if downside != gamePiece._path:
-                            self._move_ghost(self.Ghosts[i], Direction._up)
-                        else:
-                            #check the distance between the two moves, left and right
-                            updistance = self._distance_between_positions(self.Ghosts[i]._position[0]-1, self.Ghosts[i]._position[1], self.Ghosts[i]._scatter_target[0], self.ghosts[i]._scatter_target[1])
-                            downdistance = self._distance_between_positions(self.Ghosts[i]._position[0]+1, self.Ghosts[i]._position[1], self.Ghosts[i]._scatter_target[0], self.ghosts[i]._scatter_target[1])
-
-                            if updistance < downdistance:
-                                self._move_ghost(self.Ghosts[i], Direction._up)
-                            elif downdistance < updistance:
-                                self._move_ghost(self.Ghosts[i], Direction._down)
-                            elif updistance == downdistance : 
-                                self._move_ghost (self.Ghosts[i], Direction._up)
-                            else:
-                                pass
-                            
-        elif mode == 1: #chase
-
-            for i in range(len(self.Ghosts)):
-                #check which move is the right move to make, up, down, left, right
-                #check the 4 directions, if wall, or backwards remove the options of moving in that direction
-
-                if self.Ghosts[i]._direction == Direction._up:
-                    #cannot be down, check if LEFT side and RIGHT side for a wall
-                    leftside = self._check_for_walls_and_path[self.Ghosts[i]._position[0],self.Ghosts[i]._position[1] - 1 ] 
-                    rightside = self._check_for_walls_and_path[self.Ghosts[i]._position[0],self.Ghosts[i]._position[1] + 1 ] 
-
-                    #compare which move to make 
-                    if leftside != gamePiece._path:
-                        if rightside != gamePiece._path:
-                            self._move_ghost(self.Ghosts[i], Direction._up)
-                        else:
-                            self._move_ghost(self.Ghosts[i], Direction._right)
-                    else:
-                        if rightside != gamePiece._path:
-                            self._move_ghost(self.Ghosts[i], Direction._left)
-                        else:
-                            #check the distance between the two moves, left and right
-                            leftdistance = self._distance_between_positions(self.Ghosts[i]._position[0], self.Ghosts[i]._position[1]-1, self.Pacman._position[0], self.Pacman._position[1])
-                            rightdistance = self._distance_between_positions(self.Ghosts[i]._position[0], self.Ghosts[i]._position[1]+1, self.Pacman._position[0], self.Pacman._position[1])
-
-                            if leftdistance < rightdistance:
-                                self._move_ghost(self.Ghosts[i], Direction._left)
-                            elif rightdistance < leftdistance:
-                                self._move_ghost(self.Ghosts[i], Direction._right)
-                            elif leftdistance == rightdistance : 
-                                self._move_ghost (self.Ghosts[i], Direction._left)
-                            else:
-                                pass
-
-                if self.Ghosts[i]._direction == Direction._down:
-                    #cannot be UP, check if LEFT side and RIGHT side for a wall
-                    leftside = self._check_for_walls_and_path[self.Ghosts[i]._position[0],self.Ghosts[i]._position[1] - 1 ] 
-                    rightside = self._check_for_walls_and_path[self.Ghosts[i]._position[0],self.Ghosts[i]._position[1] + 1 ] 
-
-                    #compare which move to make 
-                    if leftside != gamePiece._path:
-                        if rightside != gamePiece._path:
-                            self._move_ghost(self.Ghosts[i], Direction._down)
-                        else:
-                            self._move_ghost(self.Ghosts[i], Direction._right)
-                    else:
-                        if rightside != gamePiece._path:
-                            self._move_ghost(self.Ghosts[i], Direction._left)
-                        else:
-                            #check the distance between the two moves, LEFT and RIGHT
-                            leftdistance = self._distance_between_positions(self.Ghosts[i]._position[0], self.Ghosts[i]._position[1]-1, self.Pacman._position[0], self.Pacman._position[1])
-                            rightdistance = self._distance_between_positions(self.Ghosts[i]._position[0], self.Ghosts[i]._position[1]+1, self.Pacman._position[0], self.Pacman._position[1])
-
-                            if leftdistance < rightdistance:
-                                self._move_ghost(self.Ghosts[i], Direction._left)
-                            elif rightdistance < leftdistance:
-                                self._move_ghost(self.Ghosts[i], Direction._right)
-                            elif leftdistance == rightdistance : 
-                                self._move_ghost (self.Ghosts[i], Direction._left)
-                            else:
-                                pass
-
-                if self.Ghosts[i]._direction == Direction._left:
-                    #cannot be right, check if UP side and DOWN side for a wall
-                    upside = self._check_for_walls_and_path[self.Ghosts[i]._position[0]-1,self.Ghosts[i]._position[1]] 
-                    downside = self._check_for_walls_and_path[self.Ghosts[i]._position[0]+1,self.Ghosts[i]._position[1]] 
-
-                    #compare which move to make 
-                    if upside != gamePiece._path:
-                        if downside != gamePiece._path:
-                            self._move_ghost(self.Ghosts[i], Direction._left)
-                        else:
-                            self._move_ghost(self.Ghosts[i], Direction._down)
-                    else:
-                        if downside != gamePiece._path:
-                            self._move_ghost(self.Ghosts[i], Direction._up)
-                        else:
-                            #check the distance between the two moves, left and right
-                            updistance = self._distance_between_positions(self.Ghosts[i]._position[0]-1, self.Ghosts[i]._position[1], self.Pacman._position[0], self.Pacman._position[1])
-                            downdistance = self._distance_between_positions(self.Ghosts[i]._position[0]+1, self.Ghosts[i]._position[1], self.Pacman._position[0], self.Pacman._position[1])
-
-                            if updistance < downdistance:
-                                self._move_ghost(self.Ghosts[i], Direction._up)
-                            elif downdistance < updistance:
-                                self._move_ghost(self.Ghosts[i], Direction._down)
-                            elif updistance == downdistance : 
-                                self._move_ghost (self.Ghosts[i], Direction._up)
-                            else:
-                                pass
-
-                if self.Ghosts[i]._direction == Direction._right:
-                    #cannot be left, check if UP side and DOWN side for a wall
-                    upside = self._check_for_walls_and_path[self.Ghosts[i]._position[0]-1,self.Ghosts[i]._position[1]] 
-                    downside = self._check_for_walls_and_path[self.Ghosts[i]._position[0]+1,self.Ghosts[i]._position[1]] 
-
-                    #compare which move to make 
-                    if upside != gamePiece._path:
-                        if downside != gamePiece._path:
-                            self._move_ghost(self.Ghosts[i], Direction._right)
-                        else:
-                            self._move_ghost(self.Ghosts[i], Direction._down)
-                    else:
-                        if downside != gamePiece._path:
-                            self._move_ghost(self.Ghosts[i], Direction._up)
-                        else:
-                            #check the distance between the two moves, left and right
-                            updistance = self._distance_between_positions(self.Ghosts[i]._position[0]-1, self.Ghosts[i]._position[1], self.Pacman._position[0], self.Pacman._position[1])
-                            downdistance = self._distance_between_positions(self.Ghosts[i]._position[0]+1, self.Ghosts[i]._position[1], self.Pacman._position[0], self.Pacman._position[1])
-
-                            if updistance < downdistance:
-                                self._move_ghost(self.Ghosts[i], Direction._up)
-                            elif downdistance < updistance:
-                                self._move_ghost(self.Ghosts[i], Direction._down)
-                            elif updistance == downdistance : 
-                                self._move_ghost (self.Ghosts[i], Direction._up)
-                            else:
-                                pass
-            
-    
+###################################PACMAN#######################################
     def _updated_position_of_pacman(self):
         if(self.Pacman._movement_direction == Direction._up):
             _move_valid = self._is_move_valid(Direction._up)
@@ -420,6 +151,270 @@ class Model:
                 return 0
         elif (self.Pacman._movement_direction == Direction._idle):
             return 0
+
+
+###################################GHOST#######################################
+    def _set_scatter_target_in_model(self):
+        for i in range(len(self.Ghosts)):
+            if self.Ghosts[i]._name == "Pinky":
+                r = 0
+                c = 0
+            elif self.Ghosts[i]._name == "Blinky":
+                r = 0
+                c = 27
+            elif self.Ghosts[i]._name == "Clyde":
+                r = 26
+                c = 0
+            elif self.Ghosts[i]._name == "Inky":
+                r = 26
+                c = 27
+
+            self.Ghosts[i]._set_scatter_target(r,c)
+
+    def _distance_between_positions(self,x1, y1, x2, y2):
+        #x - row
+        #y - column
+        distance = math.dist([x1, y1], [x2, y2])
+        print(distance)
+        return distance
+
+    def _determine_direction_to_move_ghost(self, mode):
+        
+        if mode == 0: #scatter state
+            for i in range(len(self.Ghosts)):
+                #check which move is the right move to make, up, down, left, right
+                #check the 4 directions, if wall, or backwards remove the options of moving in that direction
+
+                if self.Ghosts[i]._direction == Direction._up:
+                    #cannot be down, check if LEFT side and RIGHT side for a wall
+                    leftside = self._check_gamepiece[self.Ghosts[i]._position[0],self.Ghosts[i]._position[1] - 1 ] 
+                    rightside = self._check_gamepiece[self.Ghosts[i]._position[0],self.Ghosts[i]._position[1] + 1 ] 
+
+                    #compare which move to make 
+                    if leftside != gamePiece._path:
+                        if rightside != gamePiece._path:
+                            self._move_ghost(self.Ghosts[i], Direction._up)
+                        else:
+                            self._move_ghost(self.Ghosts[i], Direction._right)
+                    else:
+                        if rightside != gamePiece._path:
+                            self._move_ghost(self.Ghosts[i], Direction._left)
+                        else:
+                            #check the distance between the two moves, left and right
+                            leftdistance = self._distance_between_positions(self.Ghosts[i]._position[0], self.Ghosts[i]._position[1]-1, self.Ghosts[i]._scatter_target[0], self.ghosts[i]._scatter_target[1])
+                            rightdistance = self._distance_between_positions(self.Ghosts[i]._position[0], self.Ghosts[i]._position[1]+1, self.Ghosts[i]._scatter_target[0], self.ghosts[i]._scatter_target[1])
+
+                            if leftdistance < rightdistance:
+                                self._move_ghost(self.Ghosts[i], Direction._left)
+                            elif rightdistance < leftdistance:
+                                self._move_ghost(self.Ghosts[i], Direction._right)
+                            elif leftdistance == rightdistance : 
+                                self._move_ghost (self.Ghosts[i], Direction._left)
+                            else:
+                                pass
+
+                if self.Ghosts[i]._direction == Direction._down:
+                    #cannot be UP, check if LEFT side and RIGHT side for a wall
+                    leftside = self._check_gamepiece[self.Ghosts[i]._position[0],self.Ghosts[i]._position[1] - 1 ] 
+                    rightside = self._check_gamepiece[self.Ghosts[i]._position[0],self.Ghosts[i]._position[1] + 1 ] 
+
+                    #compare which move to make 
+                    if leftside != gamePiece._path:
+                        if rightside != gamePiece._path:
+                            self._move_ghost(self.Ghosts[i], Direction._down)
+                        else:
+                            self._move_ghost(self.Ghosts[i], Direction._right)
+                    else:
+                        if rightside != gamePiece._path:
+                            self._move_ghost(self.Ghosts[i], Direction._left)
+                        else:
+                            #check the distance between the two moves, LEFT and RIGHT
+                            leftdistance = self._distance_between_positions(self.Ghosts[i]._position[0], self.Ghosts[i]._position[1]-1, self.Ghosts[i]._scatter_target[0], self.ghosts[i]._scatter_target[1])
+                            rightdistance = self._distance_between_positions(self.Ghosts[i]._position[0], self.Ghosts[i]._position[1]+1, self.Ghosts[i]._scatter_target[0], self.ghosts[i]._scatter_target[1])
+
+                            if leftdistance < rightdistance:
+                                self._move_ghost(self.Ghosts[i], Direction._left)
+                            elif rightdistance < leftdistance:
+                                self._move_ghost(self.Ghosts[i], Direction._right)
+                            elif leftdistance == rightdistance : 
+                                self._move_ghost (self.Ghosts[i], Direction._left)
+                            else:
+                                pass
+
+                if self.Ghosts[i]._direction == Direction._left:
+                    #cannot be right, check if UP side and DOWN side for a wall
+                    upside = self._check_gamepiece[self.Ghosts[i]._position[0]-1,self.Ghosts[i]._position[1]] 
+                    downside = self._check_gamepiece[self.Ghosts[i]._position[0]+1,self.Ghosts[i]._position[1]] 
+
+                    #compare which move to make 
+                    if upside != gamePiece._path:
+                        if downside != gamePiece._path:
+                            self._move_ghost(self.Ghosts[i], Direction._left)
+                        else:
+                            self._move_ghost(self.Ghosts[i], Direction._down)
+                    else:
+                        if downside != gamePiece._path:
+                            self._move_ghost(self.Ghosts[i], Direction._up)
+                        else:
+                            #check the distance between the two moves, left and right
+                            updistance = self._distance_between_positions(self.Ghosts[i]._position[0]-1, self.Ghosts[i]._position[1], self.Ghosts[i]._scatter_target[0], self.ghosts[i]._scatter_target[1])
+                            downdistance = self._distance_between_positions(self.Ghosts[i]._position[0]+1, self.Ghosts[i]._position[1], self.Ghosts[i]._scatter_target[0], self.ghosts[i]._scatter_target[1])
+
+                            if updistance < downdistance:
+                                self._move_ghost(self.Ghosts[i], Direction._up)
+                            elif downdistance < updistance:
+                                self._move_ghost(self.Ghosts[i], Direction._down)
+                            elif updistance == downdistance : 
+                                self._move_ghost (self.Ghosts[i], Direction._up)
+                            else:
+                                pass
+
+                if self.Ghosts[i]._direction == Direction._right:
+                    #cannot be left, check if UP side and DOWN side for a wall
+                    upside = self._check_gamepiece[self.Ghosts[i]._position[0]-1,self.Ghosts[i]._position[1]] 
+                    downside = self._check_gamepiece[self.Ghosts[i]._position[0]+1,self.Ghosts[i]._position[1]] 
+
+                    #compare which move to make 
+                    if upside != gamePiece._path:
+                        if downside != gamePiece._path:
+                            self._move_ghost(self.Ghosts[i], Direction._right)
+                        else:
+                            self._move_ghost(self.Ghosts[i], Direction._down)
+                    else:
+                        if downside != gamePiece._path:
+                            self._move_ghost(self.Ghosts[i], Direction._up)
+                        else:
+                            #check the distance between the two moves, left and right
+                            updistance = self._distance_between_positions(self.Ghosts[i]._position[0]-1, self.Ghosts[i]._position[1], self.Ghosts[i]._scatter_target[0], self.ghosts[i]._scatter_target[1])
+                            downdistance = self._distance_between_positions(self.Ghosts[i]._position[0]+1, self.Ghosts[i]._position[1], self.Ghosts[i]._scatter_target[0], self.ghosts[i]._scatter_target[1])
+
+                            if updistance < downdistance:
+                                self._move_ghost(self.Ghosts[i], Direction._up)
+                            elif downdistance < updistance:
+                                self._move_ghost(self.Ghosts[i], Direction._down)
+                            elif updistance == downdistance : 
+                                self._move_ghost (self.Ghosts[i], Direction._up)
+                            else:
+                                pass
+                            
+        elif mode == 1: #chase
+
+            for i in range(len(self.Ghosts)):
+                #check which move is the right move to make, up, down, left, right
+                #check the 4 directions, if wall, or backwards remove the options of moving in that direction
+
+                if self.Ghosts[i]._direction == Direction._up:
+                    #cannot be down, check if LEFT side and RIGHT side for a wall
+                    leftside = self._check_gamepiece[self.Ghosts[i]._position[0],self.Ghosts[i]._position[1] - 1 ] 
+                    rightside = self._check_gamepiece[self.Ghosts[i]._position[0],self.Ghosts[i]._position[1] + 1 ] 
+
+                    #compare which move to make 
+                    if leftside != gamePiece._path:
+                        if rightside != gamePiece._path:
+                            self._move_ghost(self.Ghosts[i], Direction._up)
+                        else:
+                            self._move_ghost(self.Ghosts[i], Direction._right)
+                    else:
+                        if rightside != gamePiece._path:
+                            self._move_ghost(self.Ghosts[i], Direction._left)
+                        else:
+                            #check the distance between the two moves, left and right
+                            leftdistance = self._distance_between_positions(self.Ghosts[i]._position[0], self.Ghosts[i]._position[1]-1, self.Pacman._position[0], self.Pacman._position[1])
+                            rightdistance = self._distance_between_positions(self.Ghosts[i]._position[0], self.Ghosts[i]._position[1]+1, self.Pacman._position[0], self.Pacman._position[1])
+
+                            if leftdistance < rightdistance:
+                                self._move_ghost(self.Ghosts[i], Direction._left)
+                            elif rightdistance < leftdistance:
+                                self._move_ghost(self.Ghosts[i], Direction._right)
+                            elif leftdistance == rightdistance : 
+                                self._move_ghost (self.Ghosts[i], Direction._left)
+                            else:
+                                pass
+
+                if self.Ghosts[i]._direction == Direction._down:
+                    #cannot be UP, check if LEFT side and RIGHT side for a wall
+                    leftside = self._check_gamepiece[self.Ghosts[i]._position[0],self.Ghosts[i]._position[1] - 1 ] 
+                    rightside = self._check_gamepiece[self.Ghosts[i]._position[0],self.Ghosts[i]._position[1] + 1 ] 
+
+                    #compare which move to make 
+                    if leftside != gamePiece._path:
+                        if rightside != gamePiece._path:
+                            self._move_ghost(self.Ghosts[i], Direction._down)
+                        else:
+                            self._move_ghost(self.Ghosts[i], Direction._right)
+                    else:
+                        if rightside != gamePiece._path:
+                            self._move_ghost(self.Ghosts[i], Direction._left)
+                        else:
+                            #check the distance between the two moves, LEFT and RIGHT
+                            leftdistance = self._distance_between_positions(self.Ghosts[i]._position[0], self.Ghosts[i]._position[1]-1, self.Pacman._position[0], self.Pacman._position[1])
+                            rightdistance = self._distance_between_positions(self.Ghosts[i]._position[0], self.Ghosts[i]._position[1]+1, self.Pacman._position[0], self.Pacman._position[1])
+
+                            if leftdistance < rightdistance:
+                                self._move_ghost(self.Ghosts[i], Direction._left)
+                            elif rightdistance < leftdistance:
+                                self._move_ghost(self.Ghosts[i], Direction._right)
+                            elif leftdistance == rightdistance : 
+                                self._move_ghost (self.Ghosts[i], Direction._left)
+                            else:
+                                pass
+
+                if self.Ghosts[i]._direction == Direction._left:
+                    #cannot be right, check if UP side and DOWN side for a wall
+                    upside = self._check_gamepiece[self.Ghosts[i]._position[0]-1,self.Ghosts[i]._position[1]] 
+                    downside = self._check_gamepiece[self.Ghosts[i]._position[0]+1,self.Ghosts[i]._position[1]] 
+
+                    #compare which move to make 
+                    if upside != gamePiece._path:
+                        if downside != gamePiece._path:
+                            self._move_ghost(self.Ghosts[i], Direction._left)
+                        else:
+                            self._move_ghost(self.Ghosts[i], Direction._down)
+                    else:
+                        if downside != gamePiece._path:
+                            self._move_ghost(self.Ghosts[i], Direction._up)
+                        else:
+                            #check the distance between the two moves, left and right
+                            updistance = self._distance_between_positions(self.Ghosts[i]._position[0]-1, self.Ghosts[i]._position[1], self.Pacman._position[0], self.Pacman._position[1])
+                            downdistance = self._distance_between_positions(self.Ghosts[i]._position[0]+1, self.Ghosts[i]._position[1], self.Pacman._position[0], self.Pacman._position[1])
+
+                            if updistance < downdistance:
+                                self._move_ghost(self.Ghosts[i], Direction._up)
+                            elif downdistance < updistance:
+                                self._move_ghost(self.Ghosts[i], Direction._down)
+                            elif updistance == downdistance : 
+                                self._move_ghost (self.Ghosts[i], Direction._up)
+                            else:
+                                pass
+
+                if self.Ghosts[i]._direction == Direction._right:
+                    #cannot be left, check if UP side and DOWN side for a wall
+                    upside = self._check_gamepiece[self.Ghosts[i]._position[0]-1,self.Ghosts[i]._position[1]] 
+                    downside = self._check_gamepiece[self.Ghosts[i]._position[0]+1,self.Ghosts[i]._position[1]] 
+
+                    #compare which move to make 
+                    if upside != gamePiece._path:
+                        if downside != gamePiece._path:
+                            self._move_ghost(self.Ghosts[i], Direction._right)
+                        else:
+                            self._move_ghost(self.Ghosts[i], Direction._down)
+                    else:
+                        if downside != gamePiece._path:
+                            self._move_ghost(self.Ghosts[i], Direction._up)
+                        else:
+                            #check the distance between the two moves, left and right
+                            updistance = self._distance_between_positions(self.Ghosts[i]._position[0]-1, self.Ghosts[i]._position[1], self.Pacman._position[0], self.Pacman._position[1])
+                            downdistance = self._distance_between_positions(self.Ghosts[i]._position[0]+1, self.Ghosts[i]._position[1], self.Pacman._position[0], self.Pacman._position[1])
+
+                            if updistance < downdistance:
+                                self._move_ghost(self.Ghosts[i], Direction._up)
+                            elif downdistance < updistance:
+                                self._move_ghost(self.Ghosts[i], Direction._down)
+                            elif updistance == downdistance : 
+                                self._move_ghost (self.Ghosts[i], Direction._up)
+                            else:
+                                pass
+            
     
     def _move_ghost(self, ghost_obj, direction):
         pass
