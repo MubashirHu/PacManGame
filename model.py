@@ -381,6 +381,46 @@ class Model:
                             else:
                                 pass
             
+    
+    def _updated_position_of_pacman(self):
+        if(self.Pacman._movement_direction == Direction._up):
+            _move_valid = self._is_move_valid(Direction._up)
+            if(_move_valid):
+                self._last_direction = Direction._up
+                return 1
+            else:
+                self.Pacman._movement_direction._idle
+                return 0
+                
+        elif (self.Pacman._movement_direction == Direction._down):
+            _move_valid = self._is_move_valid(Direction._down)
+            if(_move_valid):
+                self._last_direction = Direction._down
+                return 1
+            else:
+                self.Pacman._movement_direction._idle
+                return 0
+            
+        elif (self.Pacman._movement_direction == Direction._left):
+            _move_valid = self._is_move_valid(Direction._left)
+            if(_move_valid):
+                self._last_direction = Direction._left
+                return 1
+            else:
+                self.Pacman._movement_direction._idle
+                return 0
+            
+        elif (self.Pacman._movement_direction == Direction._right):
+            _move_valid = self._is_move_valid(Direction._right)
+            if(_move_valid):
+                self._last_direction = Direction._right
+                return 1
+            else:
+                self.Pacman._movement_direction._idle
+                return 0
+        elif (self.Pacman._movement_direction == Direction._idle):
+            return 0
+    
     def _move_ghost(self, ghost_obj, direction):
         pass
 

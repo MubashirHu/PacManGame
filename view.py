@@ -221,5 +221,10 @@ class View:
 
         self._label = Label(self._root, text = ghost_state ,font=('Times', 24), bg= "white", fg = ghost_color)
         self._label.grid(row=r, column=3)
-             
+
+
+    def _updated_position_of_pacman(self, row, col):
+        self._draw_shape(row, col, gamePiece._pacman) # draw pacman
+
+        return 1
     
