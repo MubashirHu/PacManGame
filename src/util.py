@@ -14,17 +14,11 @@ class gamePiece(Enum):
     _ghost_house = 4
     _ghost = 5
     _ghost_house_path = 6
-    
-    _ghost_inky_home = 7
-    _ghost_pinky_home = 8
-    _ghost_blinky_home = 9
-    _ghost_clyde_home = 10
+    _inky = 7
+    _pinky = 8
+    _blinky = 9
+    _clyde = 10
 
-class ghost(Enum):
-    _pinky = 0
-    _blinky = 1
-    _inky = 2
-    _clyde = 3
 class ghostState(Enum):
     _scatter = 0
     _chase = 1
