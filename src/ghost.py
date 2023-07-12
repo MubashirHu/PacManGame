@@ -1,3 +1,4 @@
+from src.util import *
 class Ghost:
     def __init__(self, name, color):
         self._name = name
@@ -8,7 +9,7 @@ class Ghost:
         self._scatter_target = []
         self._chase_target = []
         self._direction = None
-        self._state = None
+        self._state = ghostState._scatter
         self._speed = None
         self._status = None
         self._vulnerability_timer = None
@@ -29,11 +30,6 @@ class Ghost:
 
     def _set_status(self, status):
         self._status = status
-
-    def _set_scatter_target(self, row, column):
-        self._scatter_target.clear()
-        self._scatter_target.append(row)
-        self._scatter_target.append(column)
 
     def _set_chase_target(self, row, column):
         self._chase_target = (row, column)
@@ -91,3 +87,32 @@ class Ghost:
     
     def _get_vulnerability_timer(self):
         return self._vulnerability_timer
+    
+    def _set_scatter_target(self, ghost):
+        if ghost == "Pinky":
+            r = 0
+            c = 0
+            self._scatter_target.clear()
+            self._scatter_target.append(r)
+            self._scatter_target.append(c)
+
+        elif ghost == "Blinky":
+            r = 0
+            c = 27
+            self._scatter_target.clear()
+            self._scatter_target.append(r)
+            self._scatter_target.append(c)
+
+        elif ghost == "Clyde":
+            r = 26
+            c = 0
+            self._scatter_target.clear()
+            self._scatter_target.append(r)
+            self._scatter_target.append(c)
+        elif ghost == "Inky":
+            r = 26
+            c = 27
+            self._scatter_target.clear()
+            self._scatter_target.append(r)
+            self._scatter_target.append(c)
+        

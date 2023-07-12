@@ -29,7 +29,7 @@ class Controller:
             else:
                 self.my_model.Pacman._movement_direction = Direction._up
                 self._last_key_pressed = "w"
-                self._update_pacman_position()
+                self._move_pacman_in_pressed_direction()
 
         if(direction == "a"):
             self._game_started = True            
@@ -38,7 +38,7 @@ class Controller:
             else:
                 self._last_key_pressed = "a"
                 self.my_model.Pacman._movement_direction = Direction._left
-                self._update_pacman_position()
+                self._move_pacman_in_pressed_direction()
 
         if(direction == "s"):
             self._game_started = True
@@ -47,7 +47,7 @@ class Controller:
             else:
                 self._last_key_pressed = "s"
                 self.my_model.Pacman._movement_direction = Direction._down
-                self._update_pacman_position()
+                self._move_pacman_in_pressed_direction()
 
         if(direction == "d"):
             self._game_started = True
@@ -56,17 +56,21 @@ class Controller:
             else:
                 self._last_key_pressed = "d"
                 self.my_model.Pacman._movement_direction = Direction._right   
-                self._update_pacman_position()
+                self._move_pacman_in_pressed_direction()
 
     def _initialize_model_and_view(self):
         if self.my_model._initialize():
             if self.my_view._initialize():
                 print("Both view and model have been initialized...")
+            
+        self._draw_maze_and_pacman()
+        self._display_coordinates()
 
-    def _draw_maze(self):
+    def _draw_maze_and_pacman(self):
+        
         for r in range(self.my_model.Map._rows):
             for c in range(self.my_model.Map._columns):
-                tmp = self.my_model._check_gamepiece(None, r, c)       
+                tmp = self.my_model._scan_direction(None, r, c, None)       
                 self.my_view._draw_shape(tmp[0], tmp[1], tmp[2])     
         
         self.my_view._draw_shape(self.my_model.Pacman.row, self.my_model.Pacman.col, gamePiece._pacman)
@@ -74,7 +78,7 @@ class Controller:
         for i in range (len(self.my_model.Ghosts)):
             self.my_view._draw_ghost(self.my_model.Ghosts[i]._position[0], self.my_model.Ghosts[i]._position[1], self.my_model.Ghosts[i])
 
-    def _update_pacman_position(self):
+    def _move_pacman_in_pressed_direction(self):
         if self._pacman_update_event is not None:
             self.my_view._root.after_cancel(self._pacman_update_event)
 
@@ -85,7 +89,7 @@ class Controller:
             else:
                 self.my_model.Pacman._movement_direction = self._last_direction
 
-        self._pacman_update_event = self.my_view._root.after(self._scheduling_speed, self._update_pacman_position)  # Schedule
+        self._pacman_update_event = self.my_view._root.after(self._scheduling_speed, self._move_pacman_in_pressed_direction)  # Schedule
         return 1
     
     def _display_coordinates(self):
