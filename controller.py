@@ -74,24 +74,6 @@ class Controller:
         for i in range (len(self.my_model.Ghosts)):
             self.my_view._draw_ghost(self.my_model.Ghosts[i]._position[0], self.my_model.Ghosts[i]._position[1], self.my_model.Ghosts[i])
 
-    def _display_positions_of_pieces_in_view_text(self):
-        self.my_view._display_pacman_position_text(self.my_model.Pacman._position[0],self.my_model.Pacman._position[1], self.my_model.Pacman._state)
-        
-        for i in range(len(self.my_model.Ghosts)):
-            self.my_view._display_ghost_position_text(self.my_model.Ghosts[i])
-    
-    def _update_ghosts_position(self):
-        pass
-
-    def _update_position_of_ghosts_in_model(self):
-        if self._game_started:
-            pass
-        else:
-            pass
-
-    def _update_position_of_ghosts_in_view(self):
-        pass
-       
     def _update_pacman_position(self):
         if self._pacman_update_event is not None:
             self.my_view._root.after_cancel(self._pacman_update_event)
@@ -99,14 +81,22 @@ class Controller:
         if self.my_model.Pacman._movement_direction != Direction._idle:
             if self.my_model._updated_position_of_pacman():
                 self.my_view._updated_position_of_pacman(self.my_model.Pacman._position[0], self.my_model.Pacman._position[1])
-                self._display_positions_of_pieces_in_view_text()
+                self._display_coordinates()
             else:
                 self.my_model.Pacman._movement_direction = self._last_direction
 
         self._pacman_update_event = self.my_view._root.after(self._scheduling_speed, self._update_pacman_position)  # Schedule
         return 1
-        
     
+    def _display_coordinates(self):
+        self.my_view._display_pacman_position_text(self.my_model.Pacman._position[0],self.my_model.Pacman._position[1], self.my_model.Pacman._state)
         
+        for i in range(len(self.my_model.Ghosts)):
+            self.my_view._display_ghost_position_text(self.my_model.Ghosts[i])
+
+    #TODO
+    def _update_ghosts_position(self):
+        pass
+ 
     def clear(self):
         os.system('cls' if os.name == 'nt' else 'clear')
