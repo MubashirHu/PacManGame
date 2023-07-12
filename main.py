@@ -8,7 +8,7 @@ def main():
     myController = Controller()
     myController._initialize_model_and_view()
     myController._display_initial_positions()
-    myController._display_positions_of_pieces_in_view_text()
+    myController._display_coordinates()
 
     myController.my_view._root.mainloop()
     
