@@ -180,6 +180,7 @@ class View:
     def _display_ghost_position_text(self, ghost_obj):
 
         #local vars
+        ghost_direction = ghost_obj._direction
         ghost_state = ghost_obj._state
         row_position = ghost_obj.row
         column_position = ghost_obj.col
@@ -217,6 +218,9 @@ class View:
 
         self._label = Label(self._root, text = ghost_state ,font=('Times', 24), bg= "white", fg = ghost_color)
         self._label.grid(row=r, column=3)
+
+        self._label = Label(self._root, text = ghost_direction ,font=('Times', 24), bg= "white", fg = ghost_color)
+        self._label.grid(row=r, column=4)
 
 
     def _update_position_of_pacman(self, row, col):
