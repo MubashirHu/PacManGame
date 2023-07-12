@@ -43,60 +43,72 @@ class Model:
         self._set_scatter_target_in_model()
         return 1
 
-    def _check_gamepiece(self, row, column):
-        if(self._current_level[row][column] == "1"):
-            return row, column, gamePiece._wall # wall
-        elif (self._current_level[row][column] == "0"):
-            return row, column, gamePiece._path # path
-        elif (self._current_level[row][column] == "2"):
-            return row, column, gamePiece._ghost_house_path # ghost house color
-        elif (self._current_level[row][column] == "3"):
-            return row, column, gamePiece._ghost_pinky_home # ghost house color
-        elif (self._current_level[row][column] == "4"):
-            return row, column, gamePiece._ghost_blinky_home # ghost house color
-        elif (self._current_level[row][column] == "5"):
-            return row, column, gamePiece._ghost_clyde_home # ghost house color
-        elif (self._current_level[row][column] == "6"):
-            return row, column, gamePiece._ghost_inky_home # ghost house color
-        
-    def _is_move_valid(self, direction):
+    def _check_gamepiece(self, obj = 0, r=0, c=0, direction = Direction._idle):
+
         if direction == Direction._up:
-            row = self.Pacman._position[0]-1
-            column = self.Pacman._position[1]
-            if self._current_level[row][column] == "0":
+            r = obj._position[0]-1
+            c = obj._position[1]
+        elif direction == Direction._down:
+            r = obj._position[0]+1
+            c = obj._position[1]
+        elif direction == Direction._left:
+            r = obj._position[0]
+            c = obj._position[1]-1
+        elif direction == Direction._right:
+            r = obj._position[0]
+            c = obj._position[1]+1
+        else:
+            pass
+
+        if(self._current_level[r][c] == "1"):
+            return r, c, gamePiece._wall # wall
+        elif (self._current_level[r][c] == "0"):
+            return r, c, gamePiece._path # path
+        elif (self._current_level[r][c] == "2"):
+            return r, c, gamePiece._ghost_house_path # ghost house color
+        elif (self._current_level[r][c] == "3"):
+            return r, c, gamePiece._ghost_pinky_home # ghost house color
+        elif (self._current_level[r][c] == "4"):
+            return r, c, gamePiece._ghost_blinky_home # ghost house color
+        elif (self._current_level[r][c] == "5"):
+            return r, c, gamePiece._ghost_clyde_home # ghost house color
+        elif (self._current_level[r][c] == "6"):
+            return r, c, gamePiece._ghost_inky_home # ghost house color
+        
+    def _is_move_valid_for_pacman(self, direction):
+        if direction == Direction._up:
+            tmp = self._check_gamepiece(self.Pacman, self.Pacman.row, self.Pacman.col, direction)
+            if tmp[2] == gamePiece._path:
                 self.Pacman._position[0] -= 1
                 return 1
-            elif self._current_level[row][column] == "1":
-                self.Pacman._movement_direction = Direction._idle
-                return 0
-            
-        elif direction == Direction._left:
-            row = self.Pacman._position[0]
-            column = self.Pacman._position[1]-1
-            if self._current_level[row][column] == "0":
-                self.Pacman._position[1] -= 1
-                return 1
-            elif self._current_level[row][column] == "1":
+            else:
                 self.Pacman._movement_direction = Direction._idle
                 return 0
             
         elif direction == Direction._down:
-            row = self.Pacman._position[0]+1
-            column = self.Pacman._position[1]
-            if self._current_level[row][column] == "0":
+            tmp = self._check_gamepiece(self.Pacman, self.Pacman.row, self.Pacman.col, direction)
+            if tmp[2] == gamePiece._path:
                 self.Pacman._position[0] += 1
                 return 1
-            elif self._current_level[row][column] == "1":
+            else:
+                self.Pacman._movement_direction = Direction._idle
+                return 0
+            
+        elif direction == Direction._left:
+            tmp = self._check_gamepiece(self.Pacman, self.Pacman.row, self.Pacman.col, direction)
+            if tmp[2] == gamePiece._path:
+                self.Pacman._position[1] -= 1
+                return 1
+            else:
                 self.Pacman._movement_direction = Direction._idle
                 return 0
             
         elif direction == Direction._right:
-            row = self.Pacman._position[0]
-            column = self.Pacman._position[1] +1
-            if self._current_level[row][column] == "0":
+            tmp = self._check_gamepiece(self.Pacman, self.Pacman.row, self.Pacman.col, direction)
+            if tmp[2] == gamePiece._path:
                 self.Pacman._position[1] += 1
                 return 1
-            elif self._current_level[row][column] == "1":
+            else:
                 self.Pacman._movement_direction = Direction._idle
                 return 0
             
@@ -115,7 +127,7 @@ class Model:
 ###################################PACMAN#######################################
     def _updated_position_of_pacman(self):
         if(self.Pacman._movement_direction == Direction._up):
-            _move_valid = self._is_move_valid(Direction._up)
+            _move_valid = self._is_move_valid_for_pacman(Direction._up)
             if(_move_valid):
                 self._last_direction = Direction._up
                 return 1
@@ -124,7 +136,7 @@ class Model:
                 return 0
                 
         elif (self.Pacman._movement_direction == Direction._down):
-            _move_valid = self._is_move_valid(Direction._down)
+            _move_valid = self._is_move_valid_for_pacman(Direction._down)
             if(_move_valid):
                 self._last_direction = Direction._down
                 return 1
@@ -133,7 +145,7 @@ class Model:
                 return 0
             
         elif (self.Pacman._movement_direction == Direction._left):
-            _move_valid = self._is_move_valid(Direction._left)
+            _move_valid = self._is_move_valid_for_pacman(Direction._left)
             if(_move_valid):
                 self._last_direction = Direction._left
                 return 1
@@ -142,7 +154,7 @@ class Model:
                 return 0
             
         elif (self.Pacman._movement_direction == Direction._right):
-            _move_valid = self._is_move_valid(Direction._right)
+            _move_valid = self._is_move_valid_for_pacman(Direction._right)
             if(_move_valid):
                 self._last_direction = Direction._right
                 return 1
@@ -415,7 +427,6 @@ class Model:
                             else:
                                 pass
             
-    
     def _move_ghost(self, ghost_obj, direction):
         pass
 
