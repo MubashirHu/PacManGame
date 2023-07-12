@@ -8,7 +8,7 @@ class PacMan:
         self._lives = 0
         self._current_score = 0
         self._speed = 0
-        self._state = 0
+        self._state = pacmanState._no_buff
         self._power_up_timer = 0
         self._power_up_duration = 0
         self._power_up_score = 0
@@ -73,7 +73,7 @@ class PacMan:
     def _get_power_up_score(self):
         return self._power_up_score
     
-    def _get_pacman_starting_position_from_current_level(self, map_obj, _current_level):
+    def _get_starting_position(self, map_obj, _current_level):
         
         x = int(map_obj._rows/2)
         y = int(map_obj._columns/2)
