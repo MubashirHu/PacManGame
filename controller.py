@@ -93,8 +93,8 @@ class Controller:
             self.my_view._root.after_cancel(self._pacman_update_event)
 
         if self.my_model.Pacman._movement_direction != Direction._idle:
-            if self.my_model._updated_position_of_pacman():
-                self.my_view._updated_position_of_pacman(self.my_model.Pacman.row, self.my_model.Pacman.col)
+            if self.my_model._update_position_of_pacman():
+                self.my_view._update_position_of_pacman(self.my_model.Pacman.row, self.my_model.Pacman.col)
             else:
                 self.my_model.Pacman._movement_direction = self._last_direction
 
@@ -104,12 +104,16 @@ class Controller:
     
     #TODO working on proggress
     def ghost_ai(self):
-        if self._ghost_update_event is not None:
-            self.my_view._root.after_cancel(self._ghost_update_event)
 
-        if self._game_started:
-            if self.my_model._updated_position_of_ghosts():
-                self.my_view._updated_position_of_ghosts(self.my_model.Pacman.row, self.my_model.Pacman.col)
+        for i in range (len(self.my_model.Ghosts)):
+
+            if self._ghost_update_event is not None:
+                self.my_view._root.after_cancel(self._ghost_update_event)
+
+            if self._game_started:
+
+                if self.my_model._update_position_of_ghost(self.my_model.Ghosts[i], self.my_model.Ghosts[i]._direction):
+                    self.my_view._update_position_of_ghost(self.my_model.Ghosts[i].row, self.my_model.Ghosts[i].col)
             
         self._display_coordinates()
         self._ghost_update_event = self.my_view._root.after(self._scheduling_speed, self.ghost_ai)  # Schedule
