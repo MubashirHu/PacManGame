@@ -19,6 +19,7 @@ class Controller:
         self._last_key_pressed = None
         self._last_direction = None
         self._pacman_update_event = 1
+        self._ghost_update_event = 1
 
     ##Initialization
     def _initialize_model_and_view(self):
@@ -87,6 +88,9 @@ class Controller:
                 self._last_key_pressed = "d"
                 self.my_model.Pacman._movement_direction = Direction._right   
                 self._move_pacman_in_pressed_direction()
+
+        if self._game_started:
+            self.ghost_ai()
     
     def _move_pacman_in_pressed_direction(self):
         if self._pacman_update_event is not None:
@@ -110,10 +114,8 @@ class Controller:
             if self._ghost_update_event is not None:
                 self.my_view._root.after_cancel(self._ghost_update_event)
 
-            if self._game_started:
-
-                if self.my_model._update_position_of_ghost(self.my_model.Ghosts[i], self.my_model.Ghosts[i]._direction):
-                    self.my_view._update_position_of_ghost(self.my_model.Ghosts[i].row, self.my_model.Ghosts[i].col)
+            if self.my_model._update_position_of_ghost(self.my_model.Ghosts[i], self.my_model.Ghosts[i]._direction):
+                self.my_view._update_position_of_ghost(self.my_model.Ghosts[i].row, self.my_model.Ghosts[i].col)
             
         self._display_coordinates()
         self._ghost_update_event = self.my_view._root.after(self._scheduling_speed, self.ghost_ai)  # Schedule
