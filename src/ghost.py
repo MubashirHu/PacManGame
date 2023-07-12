@@ -1,9 +1,9 @@
 from src.util import *
 class Ghost:
-    def __init__(self, name, color, direction=Direction._up):
+    def __init__(self, name, color, direction):
         self._name = name
         self._color = color
-        self._direction = None
+        self._direction = direction
 
         self.row = 0
         self.col = 0
