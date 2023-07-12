@@ -20,61 +20,6 @@ class Controller:
         self._last_direction = None
         self._pacman_update_event = 1
 
-    def _initialize_game(self):
-        if self.my_model._initialize():
-            if self.my_view._initialize():
-                print("Both view and model have been initialized...")
-
-    def _display_initial_positions(self):
-        for i in range(self.my_model.Map._rows):
-            for j in range(self.my_model.Map._columns):
-                location_and_shape = self.my_model._check_for_walls_and_path(i, j)       
-                self.my_view._draw_shape(location_and_shape[0], location_and_shape[1], location_and_shape[2])     
-        
-        self.my_view._draw_shape(self.my_model.Pacman._position[0], self.my_model.Pacman._position[1], gamePiece._pacman)
-
-        for i in range (len(self.my_model.Ghosts)):
-            self.my_view._draw_ghost(self.my_model.Ghosts[i]._position[0], self.my_model.Ghosts[i]._position[1], self.my_model.Ghosts[i])
-
-    def _set_initial_states_and_scatter_targets(self):
-        self.my_model.Pacman._set_state(pacmanState._no_buff)
-
-        for i in range (len(self.my_model.Ghosts)):
-            self.my_model.Ghosts[i]._set_state(ghostState._scatter)
-
-        self.my_model._set_scatter_target_in_model()
-
-    def _display_positions_of_pieces_in_view_text(self):
-        self.my_view._display_pacman_position_text(self.my_model.Pacman._position[0],self.my_model.Pacman._position[1], self.my_model.Pacman._state)
-        
-        for i in range(len(self.my_model.Ghosts)):
-            self.my_view._display_ghost_position_text(self.my_model.Ghosts[i])
-    
-    def _update_ghosts_position(self):
-        pass
-
-    def _update_position_of_ghosts_in_model(self):
-        if self._game_started:
-            pass
-        else:
-            pass
-
-    def _update_position_of_ghosts_in_view(self):
-        pass
-       
-    def _update_pacman_position(self):
-        if self._pacman_update_event is not None:
-            self.my_view._root.after_cancel(self._pacman_update_event)
-
-        if self.my_model.Pacman._movement_direction != Direction._idle:
-            if self._updated_position_of_pacman_in_model():
-                self._updated_position_of_pacman_in_view()
-                self._display_positions_of_pieces_in_view_text()
-            else:
-                self.my_model.Pacman._movement_direction = self._last_direction
-
-        self._pacman_update_event = self.my_view._root.after(self._scheduling_speed, self._update_pacman_position)  # Schedule
-        return 1
 
     def _get_user_input(self, direction):
         if(direction == "w"):
@@ -112,6 +57,54 @@ class Controller:
                 self._last_key_pressed = "d"
                 self.my_model.Pacman._movement_direction = Direction._right   
                 self._update_pacman_position()
+
+    def _initialize_model_and_view(self):
+        if self.my_model._initialize():
+            if self.my_view._initialize():
+                print("Both view and model have been initialized...")
+
+    def _display_initial_positions(self):
+        for i in range(self.my_model.Map._rows):
+            for j in range(self.my_model.Map._columns):
+                location_and_shape = self.my_model._check_for_walls_and_path(i, j)       
+                self.my_view._draw_shape(location_and_shape[0], location_and_shape[1], location_and_shape[2])     
+        
+        self.my_view._draw_shape(self.my_model.Pacman._position[0], self.my_model.Pacman._position[1], gamePiece._pacman)
+
+        for i in range (len(self.my_model.Ghosts)):
+            self.my_view._draw_ghost(self.my_model.Ghosts[i]._position[0], self.my_model.Ghosts[i]._position[1], self.my_model.Ghosts[i])
+
+    def _display_positions_of_pieces_in_view_text(self):
+        self.my_view._display_pacman_position_text(self.my_model.Pacman._position[0],self.my_model.Pacman._position[1], self.my_model.Pacman._state)
+        
+        for i in range(len(self.my_model.Ghosts)):
+            self.my_view._display_ghost_position_text(self.my_model.Ghosts[i])
+    
+    def _update_ghosts_position(self):
+        pass
+
+    def _update_position_of_ghosts_in_model(self):
+        if self._game_started:
+            pass
+        else:
+            pass
+
+    def _update_position_of_ghosts_in_view(self):
+        pass
+       
+    def _update_pacman_position(self):
+        if self._pacman_update_event is not None:
+            self.my_view._root.after_cancel(self._pacman_update_event)
+
+        if self.my_model.Pacman._movement_direction != Direction._idle:
+            if self._updated_position_of_pacman_in_model():
+                self._updated_position_of_pacman_in_view()
+                self._display_positions_of_pieces_in_view_text()
+            else:
+                self.my_model.Pacman._movement_direction = self._last_direction
+
+        self._pacman_update_event = self.my_view._root.after(self._scheduling_speed, self._update_pacman_position)  # Schedule
+        return 1
 
     def _updated_position_of_pacman_in_model(self):
         if(self.my_model.Pacman._movement_direction == Direction._up):

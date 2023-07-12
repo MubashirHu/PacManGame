@@ -6,9 +6,8 @@ import threading
 def main():
 
     myController = Controller()
-    myController._initialize_game()
+    myController._initialize_model_and_view()
     myController._display_initial_positions()
-    myController._set_initial_states_and_scatter_targets()
     myController._display_positions_of_pieces_in_view_text()
 
     myController.my_view._root.mainloop()

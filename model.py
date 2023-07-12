@@ -34,6 +34,13 @@ class Model:
 
         for i in range (len(self.Ghosts)):
             self.Ghosts[i]._get_starting_position(self.Ghosts[i], self.Map, self._current_level)
+
+        self.Pacman._set_state(pacmanState._no_buff)
+
+        for i in range (len(self.Ghosts)):
+            self.Ghosts[i]._set_state(ghostState._scatter)
+
+        self._set_scatter_target_in_model()
         return 1
         
     def _set_level(self, level):
