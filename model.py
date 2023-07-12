@@ -212,56 +212,63 @@ class Model:
         else:
             pass
          
-    def _update_position_of_ghost(self, ghost_obj, direction=Direction._idle):
+    def _update_position_of_ghost(self, ghost_obj):
         #up down
         #left right
     
-        if direction == Direction._up or direction == Direction._down:
+        if ghost_obj._direction == Direction._up or ghost_obj._direction == Direction._down:
             
             left = self._scan_direction(ghost_obj, ghost_obj.row, ghost_obj.col, Direction._left)
             right = self._scan_direction(ghost_obj, ghost_obj.row, ghost_obj.col, Direction._right)
             
             if left != gamePiece._path or left != gamePiece._ghost_house:
-                if right != gamePiece._path:
-                    self._move_ghost(ghost_obj, direction)
+                if right != gamePiece._path or right != gamePiece._ghost_house:
+                    self._move_ghost(ghost_obj, ghost_obj._direction)
                 else:
+                    ghost_obj._direction = Direction._right
                     self._move_ghost(ghost_obj, Direction._right)
             else:
                 if right != gamePiece._path or right != gamePiece._ghost_house:
+                    ghost_obj._direction = Direction._left
                     self._move_ghost(ghost_obj, Direction._left)
                 else:
                     #check the distance between the two moves, left and right
                     leftdistance = self._distance_between_ghost_and_target(ghost_obj, Direction._left)
                     rightdistance = self._distance_between_ghost_and_target(ghost_obj, Direction._right)
 
-                    least_linear_direction = self._determine_least_direction(leftdistance, rightdistance, direction)
+                    least_linear_direction = self._determine_least_direction(leftdistance, rightdistance, ghost_obj._direction)
+                    ghost_obj._direction = least_linear_direction
                     self._move_ghost(ghost_obj, least_linear_direction)
                     
             return 1
 
-        elif direction == Direction._left or direction == Direction._right:
+        elif ghost_obj._direction == Direction._left or ghost_obj._direction == Direction._right:
 
             up = self._scan_direction(ghost_obj, ghost_obj.row, ghost_obj.col, Direction._up)
             down = self._scan_direction(ghost_obj, ghost_obj.row, ghost_obj.col, Direction._down)
             
             if up != gamePiece._path or up != gamePiece._ghost_house:
-                if down != gamePiece._path:
-                    self._move_ghost(ghost_obj, direction)
+                if down != gamePiece._path or down != gamePiece._ghost_house:
+                    self._move_ghost(ghost_obj, ghost_obj._direction)
                 else:
+                    ghost_obj._direction = Direction._down
                     self._move_ghost(ghost_obj, Direction._down)
             else:
                 if down != gamePiece._path or down != gamePiece._ghost_house:
+                    ghost_obj._direction = Direction._up
                     self._move_ghost(ghost_obj, Direction._up)
                 else:
                     #check the distance between the two moves, up and down
                     updistance = self._distance_between_ghost_and_target(ghost_obj, Direction._up)
                     downdistance = self._distance_between_ghost_and_target(ghost_obj, Direction._down)
 
-                    least_linear_direction = self._determine_least_direction(updistance, downdistance, direction)
+                    least_linear_direction = self._determine_least_direction(updistance, downdistance, ghost_obj._direction)
+                    ghost_obj._direction = least_linear_direction
                     self._move_ghost(ghost_obj, least_linear_direction)
                     return 1
             
-            
+        else:
+            print("ERROR: ghosts are in idle")
         
 
             
