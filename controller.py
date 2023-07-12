@@ -114,11 +114,13 @@ class Controller:
             if self._ghost_update_event is not None:
                 self.my_view._root.after_cancel(self._ghost_update_event)
 
-            if self.my_model._update_position_of_ghost(self.my_model.Ghosts[i], self.my_model.Ghosts[i]._direction):
-                self.my_view._update_position_of_ghost(self.my_model.Ghosts[i].row, self.my_model.Ghosts[i].col)
+            if self.my_model._update_position_of_ghost(self.my_model.Ghosts[i]):
+                self.my_view._update_position_of_ghost(self.my_model.Ghosts[i])
+
+            self._ghost_update_event = self.my_view._root.after(self._scheduling_speed, self.ghost_ai)  # Schedule
             
         self._display_coordinates()
-        self._ghost_update_event = self.my_view._root.after(self._scheduling_speed, self.ghost_ai)  # Schedule
+        
         return 1
      
     def clear(self):
