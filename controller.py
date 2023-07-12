@@ -63,10 +63,10 @@ class Controller:
             if self.my_view._initialize():
                 print("Both view and model have been initialized...")
 
-    def _display_initial_positions(self):
-        for i in range(self.my_model.Map._rows):
-            for j in range(self.my_model.Map._columns):
-                location_and_shape = self.my_model._check_gamepiece(i, j)       
+    def _draw_maze(self):
+        for r in range(self.my_model.Map._rows):
+            for c in range(self.my_model.Map._columns):
+                location_and_shape = self.my_model._check_gamepiece(0, r, c)       
                 self.my_view._draw_shape(location_and_shape[0], location_and_shape[1], location_and_shape[2])     
         
         self.my_view._draw_shape(self.my_model.Pacman._position[0], self.my_model.Pacman._position[1], gamePiece._pacman)
