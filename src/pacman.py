@@ -2,6 +2,8 @@ from src.util import *
 class PacMan:
     def __init__(self):
         self._position = []
+        self.row = 0
+        self.col = 0
         self._movement_direction = Direction._idle
         self._lives = 0
         self._current_score = 0
@@ -12,8 +14,12 @@ class PacMan:
         self._power_up_score = 0
         
     #setters
-    def _set_position(self, row, column):
-        self._position = (row,column)
+    def _set_position(self, r, c):
+        self._position.clear()
+        self._position.append(r)
+        self._position.append(c)
+        self.row = self._position[0]
+        self.col = self._position[1]
 
     def _set_direction(self, direction):
         self._movement_direction = direction
@@ -69,24 +75,19 @@ class PacMan:
     
     def _get_pacman_starting_position_from_current_level(self, map_obj, _current_level):
         
-
         x = int(map_obj._rows/2)
         y = int(map_obj._columns/2)
         
         if _current_level[x][y] == "1":
             
             if([x + 1][y + 1] != "1"): # bottom right
-                self._position.append(x+1)
-                self._position.append(y+1)
+                self._set_position(x+1, y+1)
             elif ([x + 1][y - 1] != "1"): # bottom left
-                self._position.append(x+1)
-                self._position.append(y-1)
+                self._set_position(x+1, y-1)
             elif ([x - 1][y + 1] != "1"): # top right
-                self._position.append(x-1)
-                self._position.append(y+1)
+                self._set_position(x-1, y+1)
             elif ([x - 1][y - 1] != "1"): #top left
-                self._position.append(x-1) 
-                self._position.append(y-1)
+                self._set_position(x-1, y-1)
             else:
                 print("ERROR: No starting position available")
                 return False 
