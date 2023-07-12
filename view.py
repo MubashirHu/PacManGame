@@ -25,82 +25,65 @@ class View:
         self._canvas.grid(row=0, column=3)
         return 1
     
-    def _draw_shape(self, y_coordinate, x_coordinate, shape):
-        if (shape == gamePiece._path):
-            if self.add_shape(self, x_coordinate, y_coordinate, self._path_size, gamePiece._path, self._path_color):
-                return 1
-            else:
-                return 0
+    def _draw_shape(self, col, row, shape, ghost_obj=None):
+
+        if ghost_obj is not None:
             
-        elif(shape == gamePiece._wall):
-            if self.add_shape(self, x_coordinate, y_coordinate, self._shape_size, gamePiece._wall, self._wall_color):
-                return 1
-            else:
-                return 0
-            
-        elif(shape == gamePiece._pacman):
-            if self._draw_pacman_in_position(x_coordinate, y_coordinate):
-                if self._eat_path_in_position(x_coordinate, y_coordinate):
+            if (shape == gamePiece._ghost):
+                if self._draw_ghost_in_position(ghost_obj):
                     return 1
                 else:
                     return 0
             else:
-                return 0
-            
-        elif(shape == gamePiece._ghost_house_path):
-            if self.add_shape(self, x_coordinate, y_coordinate, self._shape_size, gamePiece._ghost_house, self._ghost_house_path_color):
-                return 1
-            else:
-                return 0
-            
-        elif(shape == gamePiece._ghost_blinky_home):
-            if self.add_shape(self, x_coordinate, y_coordinate, self._shape_size, gamePiece._ghost_house, self._ghost_house_base_color):
-                return 1
-            else:
-                return 0
-            
-        elif(shape == gamePiece._ghost_inky_home):
-            if self.add_shape(self, x_coordinate, y_coordinate, self._shape_size, gamePiece._ghost_house, self._ghost_house_base_color):
-                return 1
-            else:
-                return 0
-            
-        elif(shape == gamePiece._ghost_pinky_home):
-            if self.add_shape(self, x_coordinate, y_coordinate, self._shape_size, gamePiece._ghost_house, self._ghost_house_base_color):
-                return 1
-            else:
-                return 0
-            
-        elif(shape == gamePiece._ghost_clyde_home):
-            if self.add_shape(self, x_coordinate, y_coordinate, self._shape_size, gamePiece._ghost_house, self._ghost_house_base_color):
-                return 1
-            else:
-                return 0
-            
-        elif (shape == gamePiece._ghost):
-            if self.add_shape(self, x_coordinate, y_coordinate, self._shape_size, gamePiece._ghost, self._ghost_house_base_color):
-                return 1
-            else:
+                print("ERROR: Unidentified shape")
                 return 0
         else:
-            print("ERROR: Unidentified shape")
+
+            if (shape == gamePiece._path):
+                if self.add_shape(self, row, col, self._path_size, gamePiece._path, self._path_color):
+                    return 1
+                else:
+                    return 0
+                
+            elif(shape == gamePiece._wall):
+                if self.add_shape(self, row, col, self._shape_size, gamePiece._wall, self._wall_color):
+                    return 1
+                else:
+                    return 0
+                
+            elif(shape == gamePiece._pacman):
+                if self._draw_pacman_in_position(row, col):
+                    if self._eat_path_in_position(row, col):
+                        return 1
+                    else:
+                        return 0
+                else:
+                    return 0
+                
+            elif(shape == gamePiece._ghost_house_path):
+                if self.add_shape(self, row, col, self._shape_size, gamePiece._ghost_house, self._ghost_house_path_color):
+                    return 1
+                else:
+                    print("ERROR: Unidentified shape")
+                    return 0
+                        
+       
+    def _draw_pacman_in_position(self, row, col):
+        self._canvas.delete(gamePiece._pacman)
+        if self.add_shape(self, row, col, self._shape_size, gamePiece._pacman, self._pacman_color):
+            return 1
+        else:
             return 0
         
-    def _draw_ghost(self, y_coordinate, x_coordinate, ghost_obj):
-            if self.add_shape(self, x_coordinate, y_coordinate, self._shape_size, gamePiece._ghost, ghost_obj._color):
-                return 1
-            else:
-                return 0
-
-    def _draw_pacman_in_position(self, x_coordinate, y_coordinate):
-        self._canvas.delete(gamePiece._pacman)
-        if self.add_shape(self, x_coordinate, y_coordinate, self._shape_size, gamePiece._pacman, self._pacman_color):
+    def _draw_ghost_in_position(self, ghost_obj):
+        if self.add_shape(self, ghost_obj.col, ghost_obj.row, self._shape_size, gamePiece._ghost, ghost_obj._color):
             return 1
         else:
             return 0
     
-    def _eat_path_in_position(self, x_coordinate, y_coordinate):
-        pellet_id = self._canvas.find_withtag(f"{x_coordinate}_{y_coordinate}")
+    def _eat_path_in_position(self, row, col):
+        self._canvas.delete(gamePiece._ghost)
+        pellet_id = self._canvas.find_withtag(f"{row}_{col}")
         if pellet_id:
             self._canvas.delete(pellet_id)
             return 1
@@ -233,14 +216,14 @@ class View:
         c = ghost_obj.col
         name = ghost_obj._name
 
-        if name == ghost._blinky:
-            self._draw_shape(r,c, gamePiece._ghost_blinky_home)
-        elif name == ghost._pinky:
-            self._draw_ghost(r,c, gamePiece._ghost_pinky_home)
-        elif name == ghost._inky:
-            self._draw_ghost(r,c, gamePiece._ghost_inky_home)
-        elif name == ghost._clyde:
-            self._draw_ghost(r,c, gamePiece._ghost_clyde_home)
+        if name == "Blinky":
+            self._draw_shape(r,c, gamePiece._ghost, ghost_obj)
+        elif name == "Pinky":
+            self._draw_shape(r,c, gamePiece._ghost, ghost_obj)
+        elif name == "Inky":
+            self._draw_shape(r,c, gamePiece._ghost, ghost_obj)
+        elif name == "Clyde":
+            self._draw_shape(r,c, gamePiece._ghost, ghost_obj)
         else:
             return 0
 
