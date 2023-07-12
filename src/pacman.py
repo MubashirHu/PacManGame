@@ -93,6 +93,5 @@ class PacMan:
                 return False 
             return True
         else:
-            self._position.append(x)
-            self._position.append(y)
+            self._set_position(x,y)
             return True
