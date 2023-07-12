@@ -79,46 +79,29 @@ class Model:
         if direction == Direction._up:
             tmp = self._check_gamepiece(self.Pacman, self.Pacman.row, self.Pacman.col, direction)
             if tmp[2] == gamePiece._path:
-                self.Pacman.row -= 1
                 return 1
             else:
-                self.Pacman._movement_direction = Direction._idle
                 return 0
             
         elif direction == Direction._down:
             tmp = self._check_gamepiece(self.Pacman, self.Pacman.row, self.Pacman.col, direction)
             if tmp[2] == gamePiece._path:
-                self.Pacman.row += 1
                 return 1
             else:
-                self.Pacman._movement_direction = Direction._idle
                 return 0
             
         elif direction == Direction._left:
             tmp = self._check_gamepiece(self.Pacman, self.Pacman.row, self.Pacman.col, direction)
             if tmp[2] == gamePiece._path:
-                self.Pacman.col -= 1
                 return 1
             else:
-                self.Pacman._movement_direction = Direction._idle
                 return 0
             
         elif direction == Direction._right:
             tmp = self._check_gamepiece(self.Pacman, self.Pacman.row, self.Pacman.col, direction)
             if tmp[2] == gamePiece._path:
-                self.Pacman.col += 1
                 return 1
             else:
-                self.Pacman._movement_direction = Direction._idle
-                return 0
-            
-        elif direction == Direction._idle:
-            tmp = self._check_gamepiece(self.Pacman, self.Pacman.row, self.Pacman.col, direction)
-            if tmp[2] == gamePiece._path:
-                self.Pacman.col += 1
-                return 1
-            else:
-                self.Pacman._movement_direction = Direction._idle
                 return 0  
         else:
             print("Not part of the controls")
@@ -127,39 +110,35 @@ class Model:
 ###################################PACMAN#######################################
     def _updated_position_of_pacman(self):
         if(self.Pacman._movement_direction == Direction._up):
-            _move_valid = self._is_move_valid_for_pacman(Direction._up)
-            if(_move_valid):
+            if(self._is_move_valid_for_pacman(Direction._up)):
+                self.Pacman.row -= 1
                 self._last_direction = Direction._up
                 return 1
             else:
-                self.Pacman._movement_direction._idle
                 return 0
                 
         elif (self.Pacman._movement_direction == Direction._down):
-            _move_valid = self._is_move_valid_for_pacman(Direction._down)
-            if(_move_valid):
+            if(self._is_move_valid_for_pacman(Direction._down)):
+                self.Pacman.row += 1
                 self._last_direction = Direction._down
                 return 1
             else:
-                self.Pacman._movement_direction._idle
                 return 0
             
         elif (self.Pacman._movement_direction == Direction._left):
-            _move_valid = self._is_move_valid_for_pacman(Direction._left)
-            if(_move_valid):
+            if(self._is_move_valid_for_pacman(Direction._left)):
+                self.Pacman.col -= 1
                 self._last_direction = Direction._left
                 return 1
             else:
-                self.Pacman._movement_direction._idle
                 return 0
             
         elif (self.Pacman._movement_direction == Direction._right):
-            _move_valid = self._is_move_valid_for_pacman(Direction._right)
-            if(_move_valid):
+            if(self._is_move_valid_for_pacman(Direction._right)):
+                self.Pacman.col += 1
                 self._last_direction = Direction._right
                 return 1
             else:
-                self.Pacman._movement_direction._idle
                 return 0
         elif (self.Pacman._movement_direction == Direction._idle):
             return 0
