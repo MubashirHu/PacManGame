@@ -66,10 +66,10 @@ class Controller:
     def _draw_maze(self):
         for r in range(self.my_model.Map._rows):
             for c in range(self.my_model.Map._columns):
-                location_and_shape = self.my_model._check_gamepiece(0, r, c)       
-                self.my_view._draw_shape(location_and_shape[0], location_and_shape[1], location_and_shape[2])     
+                tmp = self.my_model._check_gamepiece(None, r, c)       
+                self.my_view._draw_shape(tmp[0], tmp[1], tmp[2])     
         
-        self.my_view._draw_shape(self.my_model.Pacman._position[0], self.my_model.Pacman._position[1], gamePiece._pacman)
+        self.my_view._draw_shape(self.my_model.Pacman.row, self.my_model.Pacman.col, gamePiece._pacman)
 
         for i in range (len(self.my_model.Ghosts)):
             self.my_view._draw_ghost(self.my_model.Ghosts[i]._position[0], self.my_model.Ghosts[i]._position[1], self.my_model.Ghosts[i])
@@ -80,7 +80,7 @@ class Controller:
 
         if self.my_model.Pacman._movement_direction != Direction._idle:
             if self.my_model._updated_position_of_pacman():
-                self.my_view._updated_position_of_pacman(self.my_model.Pacman._position[0], self.my_model.Pacman._position[1])
+                self.my_view._updated_position_of_pacman(self.my_model.Pacman.row, self.my_model.Pacman.col)
                 self._display_coordinates()
             else:
                 self.my_model.Pacman._movement_direction = self._last_direction
@@ -89,7 +89,7 @@ class Controller:
         return 1
     
     def _display_coordinates(self):
-        self.my_view._display_pacman_position_text(self.my_model.Pacman._position[0],self.my_model.Pacman._position[1], self.my_model.Pacman._state)
+        self.my_view._display_pacman_position_text(self.my_model.Pacman.row,self.my_model.Pacman.col, self.my_model.Pacman._state)
         
         for i in range(len(self.my_model.Ghosts)):
             self.my_view._display_ghost_position_text(self.my_model.Ghosts[i])

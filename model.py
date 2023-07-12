@@ -46,17 +46,17 @@ class Model:
     def _check_gamepiece(self, obj = 0, r=0, c=0, direction = Direction._idle):
 
         if direction == Direction._up:
-            r = obj._position[0]-1
-            c = obj._position[1]
+            r = obj.row-1
+            c = obj.col
         elif direction == Direction._down:
-            r = obj._position[0]+1
-            c = obj._position[1]
+            r = obj.row+1
+            c = obj.col
         elif direction == Direction._left:
-            r = obj._position[0]
-            c = obj._position[1]-1
+            r = obj.row
+            c = obj.col-1
         elif direction == Direction._right:
-            r = obj._position[0]
-            c = obj._position[1]+1
+            r = obj.row
+            c = obj.col+1
         else:
             pass
 
@@ -79,7 +79,7 @@ class Model:
         if direction == Direction._up:
             tmp = self._check_gamepiece(self.Pacman, self.Pacman.row, self.Pacman.col, direction)
             if tmp[2] == gamePiece._path:
-                self.Pacman._position[0] -= 1
+                self.Pacman.row -= 1
                 return 1
             else:
                 self.Pacman._movement_direction = Direction._idle
@@ -88,7 +88,7 @@ class Model:
         elif direction == Direction._down:
             tmp = self._check_gamepiece(self.Pacman, self.Pacman.row, self.Pacman.col, direction)
             if tmp[2] == gamePiece._path:
-                self.Pacman._position[0] += 1
+                self.Pacman.row += 1
                 return 1
             else:
                 self.Pacman._movement_direction = Direction._idle
@@ -97,7 +97,7 @@ class Model:
         elif direction == Direction._left:
             tmp = self._check_gamepiece(self.Pacman, self.Pacman.row, self.Pacman.col, direction)
             if tmp[2] == gamePiece._path:
-                self.Pacman._position[1] -= 1
+                self.Pacman.col -= 1
                 return 1
             else:
                 self.Pacman._movement_direction = Direction._idle
@@ -106,18 +106,18 @@ class Model:
         elif direction == Direction._right:
             tmp = self._check_gamepiece(self.Pacman, self.Pacman.row, self.Pacman.col, direction)
             if tmp[2] == gamePiece._path:
-                self.Pacman._position[1] += 1
+                self.Pacman.col += 1
                 return 1
             else:
                 self.Pacman._movement_direction = Direction._idle
                 return 0
             
         elif direction == Direction._idle:
-            row = self.Pacman._position[0]
-            column = self.Pacman._position[1]
-            if self._current_level[row][column] == "0":
+            tmp = self._check_gamepiece(self.Pacman, self.Pacman.row, self.Pacman.col, direction)
+            if tmp[2] == gamePiece._path:
+                self.Pacman.col += 1
                 return 1
-            elif self._current_level[row][column] == "1":
+            else:
                 self.Pacman._movement_direction = Direction._idle
                 return 0  
         else:
