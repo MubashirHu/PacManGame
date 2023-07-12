@@ -181,8 +181,8 @@ class View:
 
         #local vars
         ghost_state = ghost_obj._state
-        row_position = ghost_obj._position[0]
-        column_position = ghost_obj._position[1]
+        row_position = ghost_obj.row
+        column_position = ghost_obj.col
         
         #----ghosts
         if ghost_obj._name == "Pinky":

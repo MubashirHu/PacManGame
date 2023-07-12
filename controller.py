@@ -42,7 +42,7 @@ class Controller:
 
         #draw ghosts 
         for i in range (len(self.my_model.Ghosts)):
-            self.my_view._draw_ghost(self.my_model.Ghosts[i]._position[0], self.my_model.Ghosts[i]._position[1], self.my_model.Ghosts[i])
+            self.my_view._draw_ghost(self.my_model.Ghosts[i].row, self.my_model.Ghosts[i].col, self.my_model.Ghosts[i])
 
     def _display_coordinates(self):
         self.my_view._display_pacman_position_text(self.my_model.Pacman.row,self.my_model.Pacman.col, self.my_model.Pacman._state)

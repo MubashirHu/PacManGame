@@ -4,7 +4,8 @@ class Ghost:
         self._name = name
         self._color = color
 
-        self._position = []
+        self.row = 0
+        self.col = 0
         self._ghost_house_position = []
         self._scatter_target = []
         self._chase_target = []
@@ -15,9 +16,9 @@ class Ghost:
         self._vulnerability_timer = None
 
     #setters
-    def _set_position(self, row, column):
-        self._position.append(row)
-        self._position.append(column)
+    def _set_position(self, r, c):
+        self.row = r
+        self.col = c
 
     def _set_direction(self, direction):
         self._direction = direction
@@ -43,26 +44,22 @@ class Ghost:
             for i in range(map_obj._rows):
                 for j in range(map_obj._columns):
                     if _current_level[i][j] == "3":
-                        self._position.append(i)
-                        self._position.append(j)
+                        self._set_position(i,j)
         elif ghost_obj._name == "Blinky":  
             for i in range(map_obj._rows):
                 for j in range(map_obj._columns):
                     if _current_level[i][j] == "4":
-                        self._position.append(i)
-                        self._position.append(j)
+                        self._set_position(i,j)
         if ghost_obj._name == "Clyde":  
             for i in range(map_obj._rows):
                 for j in range(map_obj._columns):
                     if _current_level[i][j] == "5":
-                        self._position.append(i)
-                        self._position.append(j)
+                        self._set_position(i,j)
         if ghost_obj._name == "Inky":  
             for i in range(map_obj._rows):
                 for j in range(map_obj._columns):
                     if _current_level[i][j] == "6":
-                        self._position.append(i)
-                        self._position.append(j)
+                        self._set_position(i,j)
         
     def _get_direction(self):
         return self._direction

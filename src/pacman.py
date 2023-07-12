@@ -1,7 +1,6 @@
 from src.util import *
 class PacMan:
     def __init__(self):
-        self._position = []
         self.row = 0
         self.col = 0
         self._movement_direction = Direction._idle
@@ -15,11 +14,8 @@ class PacMan:
         
     #setters
     def _set_position(self, r, c):
-        self._position.clear()
-        self._position.append(r)
-        self._position.append(c)
-        self.row = self._position[0]
-        self.col = self._position[1]
+        self.row = r
+        self.col = c
 
     def _set_direction(self, direction):
         self._movement_direction = direction
