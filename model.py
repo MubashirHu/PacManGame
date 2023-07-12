@@ -65,13 +65,13 @@ class Model:
         elif (self._current_level[r][c] == "2"):
             return r, c, gamePiece._ghost_house_path # ghost house color
         elif (self._current_level[r][c] == "3"):
-            return r, c, gamePiece._ghost_pinky_home # ghost house color
+            return r, c, gamePiece._pinky # ghost house color
         elif (self._current_level[r][c] == "4"):
-            return r, c, gamePiece._ghost_blinky_home # ghost house color
+            return r, c, gamePiece._blinky # ghost house color
         elif (self._current_level[r][c] == "5"):
-            return r, c, gamePiece._ghost_clyde_home # ghost house color
+            return r, c, gamePiece._clyde # ghost house color
         elif (self._current_level[r][c] == "6"):
-            return r, c, gamePiece._ghost_inky_home # ghost house color
+            return r, c, gamePiece._inky # ghost house color
         
 ###################################PACMAN#######################################
     def _is_move_valid_for_pacman(self, direction):
