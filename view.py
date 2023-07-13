@@ -66,8 +66,8 @@ class View:
                 else:
                     print("ERROR: Unidentified shape")
                     return 0
-                        
-       
+            
+
     def _draw_pacman_in_position(self, row, col):
         self._canvas.delete(gamePiece._pacman)
         if self.add_shape(self, row, col, self._shape_size, gamePiece._pacman, self._pacman_color):
@@ -82,7 +82,6 @@ class View:
             return 0
     
     def _eat_path_in_position(self, row, col):
-        self._canvas.delete(gamePiece._ghost)
         pellet_id = self._canvas.find_withtag(f"{row}_{col}")
         if pellet_id:
             self._canvas.delete(pellet_id)
